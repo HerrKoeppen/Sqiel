@@ -2,106 +2,110 @@ package sqiel;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SqielDatenbankzugriff {
-
-    private Connection connection;
+class DBController {
+    
+    private static final DBController dbcontroller = new DBController();
+    private static Connection connection;
+    private static final String DB_PATH = System.getProperty("user.home") + "/" + "testdb.db";
 
     static {
         try {
-            Class<?> c = Class.forName("com.mysql.jdbc.Driver");
-            if (c != null) {
-                System.out.println("JDBC-Treiber geladen");
-            }
+            Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             System.err.println("Fehler beim Laden des JDBC-Treibers");
-            System.exit(1);
+            e.printStackTrace();
         }
     }
+    
+    private DBController(){
+    }
+    
+    public static DBController getInstance(){
+        return dbcontroller;
+    }
+    
+    private void initDBConnection() {
+        try {
+            if (connection != null)
+                return;
+            System.out.println("Creating Connection to Database...");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
+            if (!connection.isClosed())
+                System.out.println("...Connection established");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-    public SqielDatenbankzugriff() {
-        createConnection();
-        createDBStructure();
-        Thread shutDownHook = new Thread() {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                System.out.println("Running shutdown hook");
-                if(connection == null) System.out.println("Connedtion to database already closed");
                 try {
-                    if (connection != null && !connection.isClosed()) {
+                    if (!connection.isClosed() && connection != null) {
                         connection.close();
                         if (connection.isClosed())
-                            System.out.println("Connection to database closed");
+                            System.out.println("Connection to Database closed");
                     }
                 } catch (SQLException e) {
-                    System.err.println(
-                            "Shutdown hook couldn't close database connection.");
+                    e.printStackTrace();
                 }
             }
-        };
-        Runtime.getRuntime().addShutdownHook(shutDownHook);
+        });
     }
 
-    private void createConnection() {
-        String url = "jdbc:mysql://localhost/?rewriteBatchedStatements=true";
-        String user = "root";
-        String pass = "";
+    private void handleDB() {
         try {
-            System.out.println("Creating DBConnection");
-            connection = DriverManager.getConnection(url, user, pass);
-        } catch (SQLException e) {
-            System.err.println("Couldn't create DBConnection");
-            System.exit(1);
-        }
-    }
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("DROP TABLE IF EXISTS books;");
+            stmt.executeUpdate("CREATE TABLE books (author, title, publication, pages, price);");
+            stmt.execute("INSERT INTO books (author, title, publication, pages, price) VALUES ('Paulchen Paule', 'Paul der Penner', '2001-05-06', '1234', '5.67')");
+            
+            PreparedStatement ps = connection
+                    .prepareStatement("INSERT INTO books VALUES (?, ?, ?, ?, ?);");
 
-    private boolean createDBStructure() {
-        String dbName = "TestDB";
+            ps.setString(1, "Willi Winzig");
+            ps.setString(2, "Willi's Wille");
+            ps.setDate(3, Date.valueOf("2011-05-16"));
+            ps.setInt(4, 432);
+            ps.setDouble(5, 32.95);
+            ps.addBatch();
 
-        String query0 = "CREATE DATABASE IF NOT EXISTS `" + dbName + "`";
+            ps.setString(1, "Anton Antonius");
+            ps.setString(2, "Anton's Alarm");
+            ps.setDate(3, Date.valueOf("2009-10-01"));
+            ps.setInt(4, 123);
+            ps.setDouble(5, 98.76);
+            ps.addBatch();
 
-        String query1 = "USE `" + dbName + "`";
-
-        String query2 = "SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO'; ";
-
-        String query3 = "CREATE TABLE IF NOT EXISTS `Studenten` ("
-                + "`Name` varchar(100) NOT NULL DEFAULT '', "
-                + "`Vorname` varchar(100) NOT NULL DEFAULT '', "
-                + "`ID` varchar(50) NOT NULL, " + "UNIQUE KEY `ID` (`ID`)"
-                + ") ENGINE=MyISAM DEFAULT CHARSET=utf8 "
-                + "DEFAULT COLLATE=utf8_german2_ci";
-
-        Statement stmt = null;
-        try {
             connection.setAutoCommit(false);
-            stmt = connection.createStatement();
-            stmt.addBatch(query0);
-            stmt.addBatch(query1);
-            stmt.addBatch(query2);
-            stmt.addBatch(query3);
-            stmt.executeBatch();
-            connection.commit();
-            stmt.close();
-            connection.close();
-            System.out.println("Database successfully created or just existing");
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stmt != null)
-                    stmt.close();
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException e) {
+            ps.executeBatch();
+            connection.setAutoCommit(true);
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM books;");
+            while (rs.next()) {
+                System.out.println("Autor = " + rs.getString("author"));
+                System.out.println("Titel = " + rs.getString("title"));
+                System.out.println("Erscheinungsdatum = "
+                        + rs.getDate("publication"));
+                System.out.println("Seiten = " + rs.getInt("pages"));
+                System.out.println("Preis = " + rs.getDouble("price"));
             }
+            rs.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.err.println("Couldn't handle DB-Query");
+            e.printStackTrace();
         }
-        return false;
     }
 
     public static void main(String[] args) {
-        new SqielDatenbankzugriff();
+        DBController dbc = DBController.getInstance();
+        dbc.initDBConnection();
+        dbc.handleDB();
     }
-} 
+}
