@@ -13,18 +13,20 @@ public class SqielDatenbankzugriff {
      /**
      * Connect to a sample database
      */
-    public static void createNewTable() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:sample.db";
-        
-        // SQL statement for creating a new table
+    private String url;
+    private String dbUrl;
+    public SqielDatenbankzugriff(String dieURL){
+        url = dieURL;
+        dbUrl = "jdbc:sqlite:"+url;
+    }
+    public void createNewTable() {
         String sql = "CREATE TABLE IF NOT EXISTS warehouses (\n"
                 + "	id integer PRIMARY KEY,\n"
                 + "	name text NOT NULL,\n"
                 + "	capacity real\n"
                 + ");";
         
-        try (Connection conn = DriverManager.getConnection(url);
+        try (Connection conn = DriverManager.getConnection(dbUrl);
                 Statement stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(sql);
@@ -35,17 +37,7 @@ public class SqielDatenbankzugriff {
     
     
     
-     public static void kreierebenutzerinfo() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:BenutzerInfo.db";
-        /*
-        CREATE Benutzerinfo IF NOT EXISTS( 
-        bid Integer NOT NULL,
-        benutzer TEXT CONSTRAINT, 
-        passwort TEXT ,
-        Primary Key(bid)) ;
-        */
-        // SQL statement for creating a new table
+     public void kreierebenutzerinfo() {
         String sql = "CREATE TABLE IF NOT EXISTS BenutzerInfo (\n"
                 + "	bid integer PRIMARY KEY,\n"
                 + "	benutzer text NOT NULL,\n"
@@ -53,7 +45,7 @@ public class SqielDatenbankzugriff {
                 + "	capacity real\n"
                 + ");";
         
-        try (Connection conn = DriverManager.getConnection(url);
+        try (Connection conn = DriverManager.getConnection(dbUrl);
                 Statement stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(sql);
@@ -66,7 +58,8 @@ public class SqielDatenbankzugriff {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        createNewTable();
-        kreierebenutzerinfo();
+        SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
+        //sq.createNewTable();
+        sq.kreierebenutzerinfo();
     }
 }
