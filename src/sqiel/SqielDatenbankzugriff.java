@@ -122,7 +122,7 @@ public class SqielDatenbankzugriff {
                 + "WHERE benutzer = ?";
 
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             // set the corresponding param
             pstmt.setString(1, neuerName);
             pstmt.setString(2, neuesPasswort);
