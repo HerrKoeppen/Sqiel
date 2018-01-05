@@ -23,6 +23,11 @@ public class SqielDatenbankzugriff {
     PreparedStatement pstmt;
     ResultSet rs;
 
+    /**
+     * Alt! Nicht benutzen!
+     *
+     * @param dieURL der Datenbankname
+     */
     public SqielDatenbankzugriff(String dieURL) {
         url = dieURL;
         dbUrl = "jdbc:sqlite:" + url;
@@ -38,6 +43,9 @@ public class SqielDatenbankzugriff {
         }
     }
 
+    /**
+     * Alt! Nicht benutzen!
+     */
     public void createNewTable() {
         String sql = "CREATE TABLE IF NOT EXISTS warehouses (\n"
                 + "	id integer PRIMARY KEY,\n"
@@ -54,6 +62,9 @@ public class SqielDatenbankzugriff {
 
     }
 
+    /**
+     * Testmethode! Nicht benutzen!
+     */
     public void kreierebenutzerinfo() {
         String sql = "CREATE TABLE IF NOT EXISTS BenutzerInfo (\n"
                 + "	bid integer PRIMARY KEY,\n"
@@ -71,6 +82,12 @@ public class SqielDatenbankzugriff {
         }
     }
 
+    /**
+     * Erzeugt die Tabelle BenutzerInfo auf einem bestehenden
+     * SqielDatenbankzugriff-Objekt mit Anbindung an eine bestimmte Datenbank.
+     * Die Tablle wird nur erzeugt, sofern diese nicht existiert. Die Tabelle
+     * enthält die Felder bid (Primärschlüssel), benutzer (UNIQUE) und passwort
+     */
     public void erzeugeBenutzerInfo() {
         String sql = "CREATE TABLE IF NOT EXISTS BenutzerInfo (\n"
                 + "	bid integer PRIMARY KEY,\n"
@@ -86,6 +103,14 @@ public class SqielDatenbankzugriff {
         }
     }
 
+    /**
+     * Führt ein INSERT auf einem besteheneden Datenbankobjekt in der Tabelle
+     * BenutzerInfo aus. Sofern der Nutzer noch nicht existiert (benutzer ist
+     * UNIQUE!) wird ein neuer eintrag angelegt.
+     *
+     * @param benutzerName der Benutzername
+     * @param benutzerPasswort das Benutzerpasswort (MD5-Hashwert)
+     */
     public void fuegeBenutzerEin(String benutzerName, String benutzerPasswort) {
         String sql = "INSERT INTO BenutzerInfo(bid,benutzer,passwort) VALUES(?,?,?)";
 
@@ -99,6 +124,11 @@ public class SqielDatenbankzugriff {
         }
     }
 
+    /**
+     * Liest sämtliche Einträge der Tabelle BenutzerInfo eines bestehenden
+     * Datenbankobjekts aus. Die Ergebnisse werden Reihenweise durchgegangen und
+     * mit den Werten bid, benutzer und passwort ausgegeben.
+     */
     public void liesAusBenutzerInfo() {
         String sql = "SELECT bid, benutzer, passwort FROM BenutzerInfo";
 
@@ -116,6 +146,15 @@ public class SqielDatenbankzugriff {
         }
     }
 
+    /**
+     * Führt ein UPDATE auf der Tabelle benutzerInfo aus. Ein bestehender
+     * Benutzer wird durch einen neuen Nutzernamen und ein neues Passwort
+     * ersetzt.
+     *
+     * @param benutzerName nach diesem Nutzernamen wird gesucht
+     * @param neuerName der gefundene Benutzer erhält diesen neuen Benutzernamen
+     * @param neuesPasswort und dieses Passwort
+     */
     public void aendereBenutzer(String benutzerName, String neuerName, String neuesPasswort) {
         String sql = "UPDATE BenutzerInfo SET benutzer = ? , "
                 + "passwort = ? "
@@ -134,6 +173,12 @@ public class SqielDatenbankzugriff {
         }
     }
 
+    /**
+     * sendet ein DELETE an die BenutzerInfo-Tabelle. Löscht einen bestimten
+     * Benutzer.
+     *
+     * @param benutzerName der zu löschende Benutzer
+     */
     public void loescheBenutzer(String benutzerName) {
         String sql = "DELETE FROM BenutzerInfo WHERE benutzer = ?";
 
@@ -148,6 +193,71 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
+ /**
+     * erzeugt die Tabelle RundenInfo auf einem bestehenden Datenbankobjekt.
+     * RundenInfo hat diese Felder:
+     * rn, m_id, ctipp
+     */
+    public void erzeugeRundenInfo() {
+        String sql = "CREATE TABLE IF NOT EXISTS RundenInfo( \n"
+                + "rn Integer,\n"
+                + "m_id Integer,\n"
+                + "ctipp Integer,\n"
+                + "CONSTRAINT rn,\n"
+                + "Primary Key(rn));";
+
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+ /**
+     * erzeugt die Tabelle MinMaxInfo auf einem bestehenden Datenbankobjekt.
+     * MinMaxInfo hat diese Felder:
+     * mid, max, min
+     */
+    public void erzeugeMinMaxInfo() {
+        String sql = "CREATE TABLE IF NOT EXISTS MinMaxInfo(\n"
+                + "mid INTEGER NOT NULL,\n"
+                + "max INTEGER,\n"
+                + "min INTEGER,\n"
+                + "Primary Key (mid)\n"
+                + ");";
+
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * erzeugt die Tabelle TippInfo auf einem bestehenden Datenbankobjekt.
+     * TippInfo hat diese Felder:
+     * tid, btipp, hat_getippt, pkstd, rn, bid
+     */
+    public void erzeugeTippInfo() {
+        String sql = "CREATE TABLE IF NOT EXISTS TippInfo (\n"
+                + "tid INTEGER NOT NULL,\n"
+                + " btipp INTEGER,\n"
+                + " hat_getippt INTEGER,\n"
+                + " pkstd INTEGER,\n"
+                + " rn INTEGER,\n"
+                + " bid INTEGER,\n"
+                + " CONSTRAINT tid,\n"
+                + " Primary Key(tid),\n"
+                + " FOREIGN KEY(rn) REFERENCES RundenInfo(rn), \n"
+                + " FOREIGN KEY(bid) REFERENCES BenutzerInfo(bid));";
+
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -159,5 +269,8 @@ public class SqielDatenbankzugriff {
         sq.erzeugeBenutzerInfo();
         sq.fuegeBenutzerEin("koeppen", "900150983cd24fb0d6963f7d28e17f72");
         sq.liesAusBenutzerInfo();
+        sq.erzeugeRundenInfo();
+        sq.erzeugeMinMaxInfo();
+        sq.erzeugeTippInfo();
     }
 }
