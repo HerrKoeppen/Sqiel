@@ -27,165 +27,171 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        jTextField5 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        TFPasswort = new javax.swing.JPasswordField();
+        TFBenutzername = new javax.swing.JTextField();
+        TFDeinTipp = new javax.swing.JTextField();
+        BGO = new javax.swing.JButton();
+        TFMax = new javax.swing.JTextField();
+        TFMin = new javax.swing.JTextField();
+        LMax = new javax.swing.JLabel();
+        LMin = new javax.swing.JLabel();
+        LBenutzername = new javax.swing.JLabel();
+        LPasswort = new javax.swing.JLabel();
+        LDeinTipp = new javax.swing.JLabel();
+        RBAdministrator = new javax.swing.JRadioButton();
+        TFAMax = new javax.swing.JTextField();
+        TFAMin = new javax.swing.JTextField();
+        LAMax = new javax.swing.JLabel();
+        LAMin = new javax.swing.JLabel();
+        RBauswerten = new javax.swing.JRadioButton();
+        TFSpieleranzahl = new javax.swing.JTextField();
+        LSpieleranzahl = new javax.swing.JLabel();
+        BNeuesSpiel = new javax.swing.JButton();
+        BNeueRunde = new javax.swing.JButton();
+        TFNeueRunde = new javax.swing.JTextField();
+        STrennungswand = new javax.swing.JSeparator();
+        TFNeuesSpiel = new javax.swing.JTextField();
+        SPAnzeige = new javax.swing.JScrollPane();
+        TAAnzeige = new javax.swing.JTextArea();
+        PBLadebalken = new javax.swing.JProgressBar();
+        RBPunktestand = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        TFBenutzername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                TFBenutzernameActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
-        jButton1.setText("Go!");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        TFDeinTipp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                TFDeinTippActionPerformed(evt);
             }
         });
 
-        jTextField6.setEditable(false);
-        jTextField6.setText("                ");
-        jTextField6.setEnabled(false);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        BGO.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
+        BGO.setText("Go!");
+        BGO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                BGOActionPerformed(evt);
             }
         });
 
-        jTextField7.setEditable(false);
-        jTextField7.setText("               ");
-        jTextField7.setEnabled(false);
-
-        jLabel1.setText("Max");
-
-        jLabel2.setText("Min");
-
-        jLabel3.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
-        jLabel3.setText("Benutzername");
-
-        jLabel4.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
-        jLabel4.setText("Passwort");
-
-        jLabel5.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
-        jLabel5.setText("Dein Tipp");
-
-        jRadioButton1.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
-        jRadioButton1.setText("Administrator");
-
-        jTextField8.setText("                ");
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        TFMax.setEditable(false);
+        TFMax.setText("                ");
+        TFMax.setEnabled(false);
+        TFMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                TFMaxActionPerformed(evt);
             }
         });
 
-        jTextField9.setText("               ");
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        TFMin.setEditable(false);
+        TFMin.setText("               ");
+        TFMin.setEnabled(false);
+
+        LMax.setText("Max");
+
+        LMin.setText("Min");
+
+        LBenutzername.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
+        LBenutzername.setText("Benutzername");
+
+        LPasswort.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
+        LPasswort.setText("Passwort");
+
+        LDeinTipp.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
+        LDeinTipp.setText("Dein Tipp");
+
+        RBAdministrator.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
+        RBAdministrator.setText("Administrator");
+
+        TFAMax.setText("                ");
+        TFAMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                TFAMaxActionPerformed(evt);
             }
         });
 
-        jLabel7.setText("AMax");
+        TFAMin.setText("               ");
+        TFAMin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TFAMinActionPerformed(evt);
+            }
+        });
 
-        jLabel8.setText("AMin");
+        LAMax.setText("AMax");
 
-        jRadioButton2.setFont(new java.awt.Font("Source Sans Pro", 1, 12)); // NOI18N
-        jRadioButton2.setText("auswerten");
+        LAMin.setText("AMin");
 
-        jTextField3.setText("                         ");
+        RBauswerten.setFont(new java.awt.Font("Source Sans Pro", 1, 12)); // NOI18N
+        RBauswerten.setText("auswerten");
 
-        jLabel6.setText("Spieleranzahl");
+        TFSpieleranzahl.setText("                         ");
 
-        jButton2.setText("Neues Spiel");
+        LSpieleranzahl.setText("Spieleranzahl");
 
-        jButton3.setText("Neue Runde");
+        BNeuesSpiel.setText("Neues Spiel");
 
-        jTextField4.setText("      ");
+        BNeueRunde.setText("Neue Runde");
 
-        jTextField5.setText("1  ");
+        TFNeueRunde.setText("      ");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        TFNeuesSpiel.setText("1  ");
 
-        jRadioButton3.setText("Aktuellen Punktestand anzeigen");
+        TAAnzeige.setEditable(false);
+        TAAnzeige.setColumns(20);
+        TAAnzeige.setRows(5);
+        SPAnzeige.setViewportView(TAAnzeige);
+
+        RBPunktestand.setText("Aktuellen Punktestand anzeigen");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
+            .addComponent(STrennungswand)
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(RBAdministrator)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TFNeuesSpiel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jRadioButton2)
-                                        .addComponent(jButton2)))
+                                        .addComponent(RBauswerten)
+                                        .addComponent(BNeuesSpiel)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(41, 41, 41)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton3)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(BNeueRunde)
+                                            .addComponent(TFNeueRunde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                                        .addComponent(jLabel6)
+                                        .addComponent(LSpieleranzahl)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TFSpieleranzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(30, 30, 30))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TFAMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
+                                        .addComponent(LAMax)
                                         .addGap(15, 15, 15)))
                                 .addGap(41, 41, 41)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(TFAMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(11, 11, 11)
-                                        .addComponent(jLabel8)))
+                                        .addComponent(LAMin)))
                                 .addContainerGap())))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,39 +199,36 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel5))
+                                .addComponent(LPasswort)
+                                .addComponent(LBenutzername)
+                                .addComponent(LDeinTipp))
                             .addGap(59, 59, 59)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TFPasswort, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TFBenutzername, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                        .addComponent(TFMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(TFMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(TFDeinTipp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(10, 10, 10)
-                                    .addComponent(jLabel1)
+                                    .addComponent(LMax)
                                     .addGap(69, 69, 69)
-                                    .addComponent(jLabel2)))
+                                    .addComponent(LMin)))
                             .addGap(156, 156, 156))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SPAnzeige, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(72, 72, 72)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton3)
+                        .addComponent(RBPunktestand)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(BGO)
                         .addGap(38, 38, 38))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PBLadebalken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -233,81 +236,85 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(RBAdministrator)
+                    .addComponent(BNeuesSpiel)
+                    .addComponent(BNeueRunde))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TFNeuesSpiel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TFNeueRunde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(RBauswerten)
+                    .addComponent(TFSpieleranzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LSpieleranzahl))
                 .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LAMax, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(LAMin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TFAMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TFAMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(STrennungswand, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(TFBenutzername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LBenutzername))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(TFPasswort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LPasswort))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(LMax)
+                    .addComponent(LMin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TFMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TFMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(TFDeinTipp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LDeinTipp))
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RBPunktestand)
+                    .addComponent(BGO))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SPAnzeige, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PBLadebalken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void TFMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFMaxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_TFMaxActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void TFAMaxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFAMaxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_TFAMaxActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void TFAMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFAMinActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_TFAMinActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void TFBenutzernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFBenutzernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_TFBenutzernameActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BGOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BGOActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BGOActionPerformed
+
+    private void TFDeinTippActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFDeinTippActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TFDeinTippActionPerformed
 
     /**
      * @param args the command line arguments
@@ -345,33 +352,33 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JButton BGO;
+    private javax.swing.JButton BNeueRunde;
+    private javax.swing.JButton BNeuesSpiel;
+    private javax.swing.JLabel LAMax;
+    private javax.swing.JLabel LAMin;
+    private javax.swing.JLabel LBenutzername;
+    private javax.swing.JLabel LDeinTipp;
+    private javax.swing.JLabel LMax;
+    private javax.swing.JLabel LMin;
+    private javax.swing.JLabel LPasswort;
+    private javax.swing.JLabel LSpieleranzahl;
+    private javax.swing.JProgressBar PBLadebalken;
+    private javax.swing.JRadioButton RBAdministrator;
+    private javax.swing.JRadioButton RBPunktestand;
+    private javax.swing.JRadioButton RBauswerten;
+    private javax.swing.JScrollPane SPAnzeige;
+    private javax.swing.JSeparator STrennungswand;
+    private javax.swing.JTextArea TAAnzeige;
+    private javax.swing.JTextField TFAMax;
+    private javax.swing.JTextField TFAMin;
+    private javax.swing.JTextField TFBenutzername;
+    private javax.swing.JTextField TFDeinTipp;
+    private javax.swing.JTextField TFMax;
+    private javax.swing.JTextField TFMin;
+    private javax.swing.JTextField TFNeueRunde;
+    private javax.swing.JTextField TFNeuesSpiel;
+    private javax.swing.JPasswordField TFPasswort;
+    private javax.swing.JTextField TFSpieleranzahl;
     // End of variables declaration//GEN-END:variables
 }
