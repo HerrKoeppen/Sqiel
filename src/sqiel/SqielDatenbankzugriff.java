@@ -258,19 +258,115 @@ public class SqielDatenbankzugriff {
         }
 
     }
+    
+    
+   
+    /**
+     * Erzeugt die TippInfo-Tabelle mit den Attributen
+     * 
+     */
+    
+    public void tippAEndern(int bid, int rn,int neuerTip, boolean hat_getippt, int pkstd) {
+        String sql = "UPDATE TippInfo SET btipp = ? , "
+                + "hat_getippt = ? , "
+                + "pkstd = ?"
+                + "WHERE bid = ?"
+                + "AND rn = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, neuerTip);
+            pstmt.setBoolean(2, hat_getippt);
+            pstmt.setInt(3, pkstd);
+            pstmt.setInt(4, bid  );
+            pstmt.setInt(5, rn  );
+            // update 
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    } 
+      
+    /** UPDATE: Ändert die Attributwerte  btip, hat_getippt und pkstd eines Eintrages 
+     *  mit entsprechenen rn und bid aus der TippInfo Tabelle
+     *  Input : (int bid, int rn,int neuerTip, boolean hat_getippt, int pkstd)
+     */ 
+    
+     public void loescheTipp(int bid, int rn) {
+        String sql = "DELETE FROM TippInfo WHERE bid = ?"
+                      + "AND rn = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, bid  );
+            // execute the delete statement
+            pstmt.setInt(2, rn  );
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    /**DELETE:
+     * löscht einen Eintrag in der Tippinfo-tabelle nach der Rundennummer und BenutzerID 
+     */
+     
+     
+      public void liesAusTippInfo() {
+       
+        String sql = "SELECT tid , btipp, hat_getippt, pkstd, bid,rn FROM TippInfo";
+
+        try {
+
+            rs = stmt.executeQuery(sql);
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("tid") + "\t"
+                        + rs.getString("btipp") + "\t"
+                        + rs.getString("pkstd") + "\t"
+                        + rs.getString("hat_getippt") + "\t"
+                        + rs.getString("bid") + "\t"
+                        + rs.getString("rn"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+      
+    public void fuegeTippEin(int bid, int rn,int btipp, boolean hat_getippt, int pkstd) {
+       
+
+        String sql = "INSERT INTO TippInfo(tid,btipp,hat_getippt,pkstd,rn,bid) VALUES(?,?,?,?,?,?)";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(2, btipp);
+            pstmt.setBoolean(3, hat_getippt);
+            pstmt.setInt(4, pkstd);
+            pstmt.setInt(5, rn);
+            pstmt.setInt(5, bid);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
-        //sq.createNewTable();
-        //sq.kreierebenutzerinfo();
+        sq.createNewTable();
+        sq.kreierebenutzerinfo();
         sq.erzeugeBenutzerInfo();
         sq.fuegeBenutzerEin("koeppen", "900150983cd24fb0d6963f7d28e17f72");
         sq.liesAusBenutzerInfo();
         sq.erzeugeRundenInfo();
         sq.erzeugeMinMaxInfo();
         sq.erzeugeTippInfo();
+        sq.fuegeTippEin(0,0,0, false, 0); //Test- Default
+        sq.liesAusTippInfo();
     }
 }
