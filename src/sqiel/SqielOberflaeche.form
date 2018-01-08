@@ -38,8 +38,11 @@
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="TFNeuesSpiel" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="RBauswerten" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="BNeuesSpiel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="BAuswerten" min="-2" max="-2" attributes="0"/>
+                                          <Component id="RBauswerten" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -52,7 +55,7 @@
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace pref="40" max="32767" attributes="0"/>
+                                      <EmptySpace pref="28" max="32767" attributes="0"/>
                                       <Component id="LSpieleranzahl" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="TFSpieleranzahl" min="-2" max="-2" attributes="0"/>
@@ -153,7 +156,9 @@
                   <Component id="TFSpieleranzahl" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="LSpieleranzahl" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Component id="BAuswerten" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="LAMax" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="LAMin" min="-2" max="-2" attributes="0"/>
@@ -196,7 +201,7 @@
                   <Component id="BGO" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="SPAnzeige" pref="106" max="32767" attributes="0"/>
+              <Component id="SPAnzeige" pref="102" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="PBLadebalken" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -286,6 +291,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Administrator"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RBAdministratorActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TFAMax">
       <Properties>
@@ -335,11 +343,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Neues Spiel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BNeuesSpielActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BNeueRunde">
       <Properties>
         <Property name="text" type="java.lang.String" value="Neue Runde"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BNeueRundeActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TFNeueRunde">
       <Properties>
@@ -375,6 +389,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Aktuellen Punktestand anzeigen"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="BAuswerten">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Source Sans Pro" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Auswerten"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BAuswertenActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

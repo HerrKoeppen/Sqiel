@@ -11,10 +11,14 @@ package sqiel;
  */
 public class SqielOberflaeche extends javax.swing.JFrame {
 
+    Sqiel sq;
+
     /**
      * Creates new form SqielOberflaeche
      */
     public SqielOberflaeche() {
+        sq = new Sqiel();
+        sq.setup();
         initComponents();
     }
 
@@ -55,6 +59,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         TAAnzeige = new javax.swing.JTextArea();
         PBLadebalken = new javax.swing.JProgressBar();
         RBPunktestand = new javax.swing.JRadioButton();
+        BAuswerten = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,6 +111,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
         RBAdministrator.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
         RBAdministrator.setText("Administrator");
+        RBAdministrator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RBAdministratorActionPerformed(evt);
+            }
+        });
 
         TFAMax.setText("                ");
         TFAMax.addActionListener(new java.awt.event.ActionListener() {
@@ -133,8 +143,18 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         LSpieleranzahl.setText("Spieleranzahl");
 
         BNeuesSpiel.setText("Neues Spiel");
+        BNeuesSpiel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BNeuesSpielActionPerformed(evt);
+            }
+        });
 
         BNeueRunde.setText("Neue Runde");
+        BNeueRunde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BNeueRundeActionPerformed(evt);
+            }
+        });
 
         TFNeueRunde.setText("      ");
 
@@ -146,6 +166,14 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         SPAnzeige.setViewportView(TAAnzeige);
 
         RBPunktestand.setText("Aktuellen Punktestand anzeigen");
+
+        BAuswerten.setFont(new java.awt.Font("Source Sans Pro", 1, 14)); // NOI18N
+        BAuswerten.setText("Auswerten");
+        BAuswerten.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BAuswertenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,8 +193,10 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(TFNeuesSpiel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(RBauswerten)
-                                        .addComponent(BNeuesSpiel)))
+                                        .addComponent(BNeuesSpiel)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(BAuswerten)
+                                            .addComponent(RBauswerten))))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(41, 41, 41)
@@ -175,7 +205,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                                             .addComponent(TFNeueRunde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                         .addComponent(LSpieleranzahl)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(TFSpieleranzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,7 +278,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                     .addComponent(RBauswerten)
                     .addComponent(TFSpieleranzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LSpieleranzahl))
-                .addGap(55, 55, 55)
+                .addGap(14, 14, 14)
+                .addComponent(BAuswerten)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LAMax, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(LAMin))
@@ -283,7 +315,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                     .addComponent(RBPunktestand)
                     .addComponent(BGO))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SPAnzeige, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addComponent(SPAnzeige, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(PBLadebalken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -315,6 +347,46 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     private void TFDeinTippActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFDeinTippActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TFDeinTippActionPerformed
+
+    private void RBAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBAdministratorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RBAdministratorActionPerformed
+
+    private void BNeuesSpielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeuesSpielActionPerformed
+        // TODO add your handling code here:
+        if (RBAdministrator.isSelected()) {
+            if (!TFAMin.getText().equals("")) {
+                if (!TFAMax.getText().equals("")) {
+                    int min = Integer.parseInt(TFAMin.getText());
+                    int max = Integer.parseInt(TFAMax.getText());
+                    sq.neuesSpielAnlegen(min, max);
+
+                }
+
+            }
+        }
+    }//GEN-LAST:event_BNeuesSpielActionPerformed
+
+    private void BNeueRundeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeueRundeActionPerformed
+        if (RBAdministrator.isSelected()) {
+            if (!TFAMin.getText().equals("")) {
+                if (!TFAMax.getText().equals("")) {
+                    int min = Integer.parseInt(TFAMin.getText());
+                    int max = Integer.parseInt(TFAMax.getText());
+                    sq.neueRundeAnlegen(min, max);
+                }
+
+            }
+        }    }//GEN-LAST:event_BNeueRundeActionPerformed
+
+    private void BAuswertenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAuswertenActionPerformed
+        // TODO add your handling code here:
+         if (RBAdministrator.isSelected()) {
+          sq.auswertenButton();
+             
+         }
+        
+    }//GEN-LAST:event_BAuswertenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,6 +424,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BAuswerten;
     private javax.swing.JButton BGO;
     private javax.swing.JButton BNeueRunde;
     private javax.swing.JButton BNeuesSpiel;

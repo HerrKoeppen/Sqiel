@@ -35,11 +35,48 @@ public class Sqiel {
         //gib bestehende Werte im Log aus
     }
 
+    public void neuesSpielAnlegen(int min, int max) {
+        //lösche Inhalte der Tabelle TippInfo
+        //lösche Inhalte der Tabelle RundenInfo
+        //lösche Inhalte der Tabelle MinMaxInfo
+        
+        //ergänze Eintrag in der Tabelle MinMaxInfo: min max
+
+        //speichere mID dieses Eintrags!
+        
+        //erzeuge Computertipp zwischen min und max
+        
+        //ergänze Eintrag in der Tabelle RundenInfo: mID von eben Computertipp
+        
+        //Rundennummer zurückgeben
+
+    }
+    
+    public void neueRundeAnlegen(int min, int max){
+        //ergänze Eintrag in der Tabelle MinMaxInfo: min max
+
+        //speichere mID dieses Eintrags!
+        
+        //erzeuge Computertipp zwischen min und max
+        
+        //ergänze Eintrag in der Tabelle RundenInfo: mID von eben Computertipp
+    }
+
+    public void auswertenButton(){
+    //alle Punktestände einer Person werden addiert und das für alle Personen
+    // die einzelnen Punktestände werden in TAAnzeige angezeigt
+    // danach kann ein neues Spiel gestartet werden
+    
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
     }
+
+}
 
 }
