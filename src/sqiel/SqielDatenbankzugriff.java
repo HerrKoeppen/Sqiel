@@ -242,7 +242,7 @@ public class SqielDatenbankzugriff {
         String sql = "CREATE TABLE IF NOT EXISTS TippInfo (\n"
                 + "tid INTEGER NOT NULL,\n"
                 + " btipp INTEGER,\n"
-                + " hat_getippt INTEGER,\n"
+                + " hat_getippt BOOLEAN,\n"
                 + " pkstd INTEGER,\n"
                 + " rn INTEGER,\n"
                 + " bid INTEGER,\n"
