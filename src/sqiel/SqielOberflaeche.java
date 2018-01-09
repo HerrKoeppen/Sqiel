@@ -20,6 +20,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         sq = new Sqiel();
         sq.setup();
         initComponents();
+        TAAnzeige.append("Oberfläche geladen.\n");
+        TAAnzeige.append("Sqiel sq erzeugt.\n");
+        TAAnzeige.append("sq-Setup.Methode ausgeführt. Datenbankanbindung ist da.\n");
     }
 
     /**
@@ -354,38 +357,61 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void BNeuesSpielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeuesSpielActionPerformed
         // TODO add your handling code here:
+        TAAnzeige.append("NeuesSpielKnopf gedrückt.\n");
+
         if (RBAdministrator.isSelected()) {
-            if (!TFAMin.getText().equals("")) {
-                if (!TFAMax.getText().equals("")) {
-                    int min = Integer.parseInt(TFAMin.getText());
-                    int max = Integer.parseInt(TFAMax.getText());
-                    sq.neuesSpielAnlegen(min, max);
-
-                }
-
+            TAAnzeige.append("Administrator-Radio-Button ausgewählt.\n");
+            String t1, t2;
+            int min = -1;
+            int max = -1;
+            t1 = TFAMin.getText();
+            t2 = TFAMax.getText();
+            try {
+                min = Integer.parseInt(t1);
+                max = Integer.parseInt(t2);
+            } catch (NumberFormatException nfe) {
+                TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
+            TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
+
+            int rundennummer = sq.neuesSpielAnlegen(min, max);
+            TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
+            TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
         }
     }//GEN-LAST:event_BNeuesSpielActionPerformed
 
     private void BNeueRundeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeueRundeActionPerformed
-        if (RBAdministrator.isSelected()) {
-            if (!TFAMin.getText().equals("")) {
-                if (!TFAMax.getText().equals("")) {
-                    int min = Integer.parseInt(TFAMin.getText());
-                    int max = Integer.parseInt(TFAMax.getText());
-                    sq.neueRundeAnlegen(min, max);
-                }
+        TAAnzeige.append("NeueRundeKnopf gedrückt.\n");
 
+        if (RBAdministrator.isSelected()) {
+            TAAnzeige.append("Administrator-Radio-Button ausgewählt.\n");
+            String t1, t2;
+            int min = -1;
+            int max = -1;
+            t1 = TFAMin.getText();
+            t2 = TFAMax.getText();
+            try {
+                min = Integer.parseInt(t1);
+                max = Integer.parseInt(t2);
+            } catch (NumberFormatException nfe) {
+                TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
+            TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
+
+            int rundennummer = sq.neueRundeAnlegen(min, max);
+            TAAnzeige.append("Datenbankveränderung für eine neue Runde durchgeführt.\n");
+            TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+
+
         }    }//GEN-LAST:event_BNeueRundeActionPerformed
 
     private void BAuswertenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAuswertenActionPerformed
         // TODO add your handling code here:
-         if (RBAdministrator.isSelected()) {
-          sq.auswertenButton();
-             
-         }
-        
+        if (RBAdministrator.isSelected()) {
+            sq.auswertenButton();
+
+        }
+
     }//GEN-LAST:event_BAuswertenActionPerformed
 
     /**
@@ -402,16 +428,24 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SqielOberflaeche.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SqielOberflaeche.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SqielOberflaeche.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SqielOberflaeche.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SqielOberflaeche.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SqielOberflaeche.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SqielOberflaeche.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SqielOberflaeche.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

@@ -193,10 +193,10 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
- /**
+
+    /**
      * erzeugt die Tabelle RundenInfo auf einem bestehenden Datenbankobjekt.
-     * RundenInfo hat diese Felder:
-     * rn, m_id, ctipp
+     * RundenInfo hat diese Felder: rn, m_id, ctipp
      */
     public void erzeugeRundenInfo() {
         String sql = "CREATE TABLE IF NOT EXISTS RundenInfo( \n"
@@ -213,10 +213,10 @@ public class SqielDatenbankzugriff {
         }
 
     }
- /**
+
+    /**
      * erzeugt die Tabelle MinMaxInfo auf einem bestehenden Datenbankobjekt.
-     * MinMaxInfo hat diese Felder:
-     * mid, max, min
+     * MinMaxInfo hat diese Felder: mid, max, min
      */
     public void erzeugeMinMaxInfo() {
         String sql = "CREATE TABLE IF NOT EXISTS MinMaxInfo(\n"
@@ -235,8 +235,7 @@ public class SqielDatenbankzugriff {
 
     /**
      * erzeugt die Tabelle TippInfo auf einem bestehenden Datenbankobjekt.
-     * TippInfo hat diese Felder:
-     * tid, btipp, hat_getippt, pkstd, rn, bid
+     * TippInfo hat diese Felder: tid, btipp, hat_getippt, pkstd, rn, bid
      */
     public void erzeugeTippInfo() {
         String sql = "CREATE TABLE IF NOT EXISTS TippInfo (\n"
@@ -258,15 +257,12 @@ public class SqielDatenbankzugriff {
         }
 
     }
-    
-    
-   
+
     /**
      * Erzeugt die TippInfo-Tabelle mit den Attributen
-     * 
+     *
      */
-    
-    public void tippAEndern(int bid, int rn,int neuerTip, boolean hat_getippt, int pkstd) {
+    public void tippAEndern(int bid, int rn, int neuerTip, boolean hat_getippt, int pkstd) {
         String sql = "UPDATE TippInfo SET btipp = ? , "
                 + "hat_getippt = ? , "
                 + "pkstd = ?"
@@ -279,43 +275,44 @@ public class SqielDatenbankzugriff {
             pstmt.setInt(1, neuerTip);
             pstmt.setBoolean(2, hat_getippt);
             pstmt.setInt(3, pkstd);
-            pstmt.setInt(4, bid  );
-            pstmt.setInt(5, rn  );
+            pstmt.setInt(4, bid);
+            pstmt.setInt(5, rn);
             // update 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    } 
-      
-    /** UPDATE: Ändert die Attributwerte  btip, hat_getippt und pkstd eines Eintrages 
-     *  mit entsprechenen rn und bid aus der TippInfo Tabelle
-     *  Input : (int bid, int rn,int neuerTip, boolean hat_getippt, int pkstd)
-     */ 
-    
-     public void loescheTipp(int bid, int rn) {
+    }
+
+    /**
+     * UPDATE: Ändert die Attributwerte btip, hat_getippt und pkstd eines
+     * Eintrages mit entsprechenen rn und bid aus der TippInfo Tabelle Input :
+     * (int bid, int rn,int neuerTip, boolean hat_getippt, int pkstd)
+     */
+    public void loescheTipp(int bid, int rn) {
         String sql = "DELETE FROM TippInfo WHERE bid = ?"
-                      + "AND rn = ?";
+                + "AND rn = ?";
 
         try {
             pstmt = conn.prepareStatement(sql);
             // set the corresponding param
-            pstmt.setInt(1, bid  );
+            pstmt.setInt(1, bid);
             // execute the delete statement
-            pstmt.setInt(2, rn  );
+            pstmt.setInt(2, rn);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    /**DELETE:
-     * löscht einen Eintrag in der Tippinfo-tabelle nach der Rundennummer und BenutzerID 
+
+    /**
+     * DELETE: löscht einen Eintrag in der Tippinfo-tabelle nach der
+     * Rundennummer und BenutzerID
      */
-     
-     
-      public void liesAusTippInfo() {
-       
+
+    public void liesAusTippInfo() {
+
         String sql = "SELECT tid , btipp, hat_getippt, pkstd, bid,rn FROM TippInfo";
 
         try {
@@ -334,9 +331,8 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-      
-    public void fuegeTippEin(int bid, int rn,int btipp, boolean hat_getippt, int pkstd) {
-       
+
+    public void fuegeTippEin(int bid, int rn, int btipp, boolean hat_getippt, int pkstd) {
 
         String sql = "INSERT INTO TippInfo(tid,btipp,hat_getippt,pkstd,rn,bid) VALUES(?,?,?,?,?,?)";
 
@@ -346,11 +342,85 @@ public class SqielDatenbankzugriff {
             pstmt.setBoolean(3, hat_getippt);
             pstmt.setInt(4, pkstd);
             pstmt.setInt(5, rn);
-            pstmt.setInt(5, bid);
+            pstmt.setInt(6, bid);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    /**
+     * löscht alle Inhalte einer Tabelle, deren Tabellenname übergeben wird.
+     * (Herr Köppen hält gar nichts von einem solchen Vorgehen, stellt die Methode aber trotzdem zur Verfügung)
+     * @param tabellenName Name der Tabelle, deren Inhalte gelöscht werden sollen
+     */
+    public void loescheTabellenInhalte(String tabellenName) {
+        String sql = "DELETE FROM " + tabellenName;
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+    /**
+     * Fügt einen neuen Eintrag in die MinMaxTabelle ein. Strutkur der Tabelle: MinMaxInfo(mid,max,min)
+     * @param min Der eingefügte Wert für das Minimum
+     * @param max Der eingefügte Wert für das Maximum
+     */
+    public void fuegeMinMaxEin(int min, int max) {
+
+        String sql = "INSERT INTO MinMaxInfo(mid,max,min) VALUES(?,?,?)";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(2, max);
+            pstmt.setInt(3, min);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    /**
+     *
+     * Fügt einen neuen Eintrag in die RundenInfoTabelle ein. Strutkur der Tabelle: RundenInfo(rn,m_id,ctipp)
+     * 
+     * @param mid Die MinMaxID auf die sich die RUnde bezieht. Dort enthalten sind Minimum und Maximum der Runde
+     * @param ctipp Der Computertipp für diese Runde
+     */
+    public void fuegeRundenInfoEin(int mid, int ctipp) {
+
+        String sql = "INSERT INTO RundenInfo(rn,m_id,ctipp) VALUES(?,?,?)";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(2, mid);
+            pstmt.setInt(3, ctipp);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    /**
+     * Führt eine beliebige SQL-Select Abfrage an die Tabellen durch. Liefert das Ergebnis in Form eines ResultSet zurück.
+     * Ein ResultSet rs (das hier zurückgegeben wird) kann man so auf bestimmte Inhalte prüfen:
+     * while (rs.next()){
+     *      rs.getInt("tid"); (Das würde dann das Tabellenfeld "tid" der Tabelle zeilenweise auslesen)
+     * }
+     * 
+     * @param sqlSelectAbfrage Die gewünschte SQL-Select-Abfrage
+     * @return das ResultSet als Abfrage-Ergebnis. Bedienung siehe oben oder in der java-API
+     */
+    public ResultSet fuehreSelectAus(String sqlSelectAbfrage){
+        ResultSet retRS = null;
+        try {
+
+            retRS = stmt.executeQuery(sqlSelectAbfrage);
+        
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return retRS;
     }
 
     /**
@@ -366,7 +436,7 @@ public class SqielDatenbankzugriff {
         sq.erzeugeRundenInfo();
         sq.erzeugeMinMaxInfo();
         sq.erzeugeTippInfo();
-        sq.fuegeTippEin(0,0,0, false, 0); //Test- Default
+        sq.fuegeTippEin(0, 0, 0, false, 0); //Test- Default
         sq.liesAusTippInfo();
     }
 }
