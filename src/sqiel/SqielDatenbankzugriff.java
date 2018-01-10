@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -421,6 +422,46 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
         return retRS;
+    }
+    /**
+     * Gibt alle Inhalte einer beliebigen Tabelle als String zurück.
+     * @param tabellenName Der Name der Tabelle, die ausgegeben wird
+     * @return String, der die textuelle Darstellung der Tabelle mit Inhalten ist.
+     */
+    public String gibAlleTabelleninhalteAus(String tabellenName) {
+        try {
+            String result = "Tabelle: " + tabellenName + "\n";
+
+            rs = stmt.executeQuery("SELECT * FROM " + tabellenName);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                result += rsmd.getColumnLabel(i) + "\t";
+            }
+            result +="\n";
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    if (rsmd.getColumnType(i) == java.sql.Types.INTEGER) {
+                        result += rs.getInt(rsmd.getColumnLabel(i)) + "\t";
+                    } else if (rsmd.getColumnType(i) == java.sql.Types.VARCHAR) {
+                        result += rs.getString(rsmd.getColumnLabel(i)) + "\t";
+                    } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
+                        result += rs.getDouble(rsmd.getColumnLabel(i)) + "\t";
+                    }
+                    else if (rsmd.getColumnType(i) == java.sql.Types.BOOLEAN) {
+                        result += rs.getBoolean(rsmd.getColumnLabel(i)) + "\t";
+                    }
+                    
+                }
+                result+="\n";
+            }
+            return result;
+            // Do stuff with name
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
     }
 
     /**

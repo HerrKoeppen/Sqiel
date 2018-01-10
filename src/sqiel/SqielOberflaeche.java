@@ -66,12 +66,16 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        TFPasswort.setColumns(20);
+
+        TFBenutzername.setColumns(20);
         TFBenutzername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TFBenutzernameActionPerformed(evt);
             }
         });
 
+        TFDeinTipp.setColumns(10);
         TFDeinTipp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TFDeinTippActionPerformed(evt);
@@ -87,7 +91,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         });
 
         TFMax.setEditable(false);
-        TFMax.setText("                ");
+        TFMax.setColumns(5);
         TFMax.setEnabled(false);
         TFMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +100,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         });
 
         TFMin.setEditable(false);
-        TFMin.setText("               ");
+        TFMin.setColumns(5);
         TFMin.setEnabled(false);
 
         LMax.setText("Max");
@@ -120,14 +124,14 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             }
         });
 
-        TFAMax.setText("                ");
+        TFAMax.setColumns(3);
         TFAMax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TFAMaxActionPerformed(evt);
             }
         });
 
-        TFAMin.setText("               ");
+        TFAMin.setColumns(3);
         TFAMin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TFAMinActionPerformed(evt);
@@ -141,7 +145,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         RBauswerten.setFont(new java.awt.Font("Source Sans Pro", 1, 12)); // NOI18N
         RBauswerten.setText("auswerten");
 
-        TFSpieleranzahl.setText("                         ");
+        TFSpieleranzahl.setColumns(5);
 
         LSpieleranzahl.setText("Spieleranzahl");
 
@@ -208,7 +212,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                                             .addComponent(TFNeueRunde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                                         .addComponent(LSpieleranzahl)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(TFSpieleranzahl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,7 +254,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                                     .addComponent(LMax)
                                     .addGap(69, 69, 69)
                                     .addComponent(LMin)))
-                            .addGap(156, 156, 156))
+                            .addGap(165, 165, 165))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(SPAnzeige, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(72, 72, 72)))

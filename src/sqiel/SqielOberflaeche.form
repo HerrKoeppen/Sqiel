@@ -55,7 +55,7 @@
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace pref="28" max="32767" attributes="0"/>
+                                      <EmptySpace pref="63" max="32767" attributes="0"/>
                                       <Component id="LSpieleranzahl" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="TFSpieleranzahl" min="-2" max="-2" attributes="0"/>
@@ -114,7 +114,7 @@
                                   <Component id="LMin" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="SPAnzeige" min="-2" pref="341" max="-2" attributes="0"/>
@@ -211,13 +211,22 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JPasswordField" name="TFPasswort">
+      <Properties>
+        <Property name="columns" type="int" value="20"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="TFBenutzername">
+      <Properties>
+        <Property name="columns" type="int" value="20"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TFBenutzernameActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="TFDeinTipp">
+      <Properties>
+        <Property name="columns" type="int" value="10"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TFDeinTippActionPerformed"/>
       </Events>
@@ -236,7 +245,7 @@
     <Component class="javax.swing.JTextField" name="TFMax">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="                "/>
+        <Property name="columns" type="int" value="5"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -246,7 +255,7 @@
     <Component class="javax.swing.JTextField" name="TFMin">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="               "/>
+        <Property name="columns" type="int" value="5"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
@@ -297,7 +306,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TFAMax">
       <Properties>
-        <Property name="text" type="java.lang.String" value="                "/>
+        <Property name="columns" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TFAMaxActionPerformed"/>
@@ -305,7 +314,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TFAMin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="               "/>
+        <Property name="columns" type="int" value="3"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TFAMinActionPerformed"/>
@@ -331,7 +340,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TFSpieleranzahl">
       <Properties>
-        <Property name="text" type="java.lang.String" value="                         "/>
+        <Property name="columns" type="int" value="5"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LSpieleranzahl">
