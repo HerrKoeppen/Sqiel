@@ -82,7 +82,8 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Erzeugt die Tabelle BenutzerInfo auf einem bestehenden
      * SqielDatenbankzugriff-Objekt mit Anbindung an eine bestimmte Datenbank.
@@ -194,7 +195,7 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * erzeugt die Tabelle RundenInfo auf einem bestehenden Datenbankobjekt.
      * RundenInfo hat diese Felder: rn, m_id, ctipp
@@ -214,7 +215,30 @@ public class SqielDatenbankzugriff {
         }
 
     }
+    
+    
+    
+     /**
+     *
+     * Fügt einen neuen Eintrag in die RundenInfoTabelle ein. Strutkur der Tabelle: RundenInfo(rn,m_id,ctipp)
+     * 
+     * @param mid Die MinMaxID auf die sich die RUnde bezieht. Dort enthalten sind Minimum und Maximum der Runde
+     * @param ctipp Der Computertipp für diese Runde
+     */
+    public void fuegeRundenInfoEin(int mid, int ctipp) {
 
+        String sql = "INSERT INTO RundenInfo(rn,m_id,ctipp) VALUES(?,?,?)";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(2, mid);
+            pstmt.setInt(3, ctipp);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * erzeugt die Tabelle MinMaxInfo auf einem bestehenden Datenbankobjekt.
      * MinMaxInfo hat diese Felder: mid, max, min
@@ -233,7 +257,26 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
+    
+     /**
+     * Fügt einen neuen Eintrag in die MinMaxTabelle ein. Strutkur der Tabelle: MinMaxInfo(mid,max,min)
+     * @param min Der eingefügte Wert für das Minimum
+     * @param max Der eingefügte Wert für das Maximum
+     */
+    public void fuegeMinMaxEin(int min, int max) {
 
+        String sql = "INSERT INTO MinMaxInfo(mid,max,min) VALUES(?,?,?)";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(2, max);
+            pstmt.setInt(3, min);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * erzeugt die Tabelle TippInfo auf einem bestehenden Datenbankobjekt.
      * TippInfo hat diese Felder: tid, btipp, hat_getippt, pkstd, rn, bid
@@ -296,12 +339,13 @@ public class SqielDatenbankzugriff {
 
         try {
             pstmt = conn.prepareStatement(sql);
+            //stmt.execute("SET FOREIGN_KEY_CHECKS=0");
+            //stmt.close();
             // set the corresponding param
             pstmt.setInt(1, bid);
             // execute the delete statement
             pstmt.setInt(2, rn);
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -311,7 +355,6 @@ public class SqielDatenbankzugriff {
      * DELETE: löscht einen Eintrag in der Tippinfo-tabelle nach der
      * Rundennummer und BenutzerID
      */
-
     public void liesAusTippInfo() {
 
         String sql = "SELECT tid , btipp, hat_getippt, pkstd, bid,rn FROM TippInfo";
@@ -349,12 +392,47 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-    /**
-     * löscht alle Inhalte einer Tabelle, deren Tabellenname übergeben wird.
-     * (Herr Köppen hält gar nichts von einem solchen Vorgehen, stellt die Methode aber trotzdem zur Verfügung)
-     * @param tabellenName Name der Tabelle, deren Inhalte gelöscht werden sollen
-     */
-    public void loescheTabellenInhalte(String tabellenName) {
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+    public String gibAlleTabelleninhalteAus(String tabellenName) {
+        try {
+            String result = "Tabelle: " + tabellenName + "\n";
+
+            rs = stmt.executeQuery("SELECT * FROM " + tabellenName);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                result += rsmd.getColumnLabel(i) + "\t";
+            }
+
+            result += "\n";
+            while (rs.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    if (rsmd.getColumnType(i) == java.sql.Types.INTEGER) {
+                        result += rs.getInt(rsmd.getColumnLabel(i)) + "\t";
+                    } else if (rsmd.getColumnType(i) == java.sql.Types.VARCHAR) {
+                        result += rs.getString(rsmd.getColumnLabel(i)) + "\t";
+                    } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
+                        result += rs.getDouble(rsmd.getColumnLabel(i)) + "\t";
+                    } else if (rsmd.getColumnType(i) == java.sql.Types.BOOLEAN) {
+                        result += rs.getBoolean(rsmd.getColumnLabel(i)) + "\t";
+                    }
+
+                }
+                result += "\n";
+            }
+            return result;
+            // Do stuff with name
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  public void loescheTabellenInhalte(String tabellenName) {
         String sql = "DELETE FROM " + tabellenName;
         try {
             stmt.execute(sql);
@@ -363,44 +441,8 @@ public class SqielDatenbankzugriff {
         }
 
     }
-    /**
-     * Fügt einen neuen Eintrag in die MinMaxTabelle ein. Strutkur der Tabelle: MinMaxInfo(mid,max,min)
-     * @param min Der eingefügte Wert für das Minimum
-     * @param max Der eingefügte Wert für das Maximum
-     */
-    public void fuegeMinMaxEin(int min, int max) {
-
-        String sql = "INSERT INTO MinMaxInfo(mid,max,min) VALUES(?,?,?)";
-
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(2, max);
-            pstmt.setInt(3, min);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    /**
-     *
-     * Fügt einen neuen Eintrag in die RundenInfoTabelle ein. Strutkur der Tabelle: RundenInfo(rn,m_id,ctipp)
-     * 
-     * @param mid Die MinMaxID auf die sich die RUnde bezieht. Dort enthalten sind Minimum und Maximum der Runde
-     * @param ctipp Der Computertipp für diese Runde
-     */
-    public void fuegeRundenInfoEin(int mid, int ctipp) {
-
-        String sql = "INSERT INTO RundenInfo(rn,m_id,ctipp) VALUES(?,?,?)";
-
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(2, mid);
-            pstmt.setInt(3, ctipp);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+   
+   
     /**
      * Führt eine beliebige SQL-Select Abfrage an die Tabellen durch. Liefert das Ergebnis in Form eines ResultSet zurück.
      * Ein ResultSet rs (das hier zurückgegeben wird) kann man so auf bestimmte Inhalte prüfen:
@@ -428,45 +470,11 @@ public class SqielDatenbankzugriff {
      * @param tabellenName Der Name der Tabelle, die ausgegeben wird
      * @return String, der die textuelle Darstellung der Tabelle mit Inhalten ist.
      */
-    public String gibAlleTabelleninhalteAus(String tabellenName) {
-        try {
-            String result = "Tabelle: " + tabellenName + "\n";
-
-            rs = stmt.executeQuery("SELECT * FROM " + tabellenName);
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            for (int i = 1; i <= columnCount; i++) {
-                result += rsmd.getColumnLabel(i) + "\t";
-            }
-            result +="\n";
-            while (rs.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    if (rsmd.getColumnType(i) == java.sql.Types.INTEGER) {
-                        result += rs.getInt(rsmd.getColumnLabel(i)) + "\t";
-                    } else if (rsmd.getColumnType(i) == java.sql.Types.VARCHAR) {
-                        result += rs.getString(rsmd.getColumnLabel(i)) + "\t";
-                    } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
-                        result += rs.getDouble(rsmd.getColumnLabel(i)) + "\t";
-                    }
-                    else if (rsmd.getColumnType(i) == java.sql.Types.BOOLEAN) {
-                        result += rs.getBoolean(rsmd.getColumnLabel(i)) + "\t";
-                    }
-                    
-                }
-                result+="\n";
-            }
-            return result;
-            // Do stuff with name
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return "";
-    }
-
     /**
      * @param args the command line arguments
      */
+  //////////////////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
         sq.createNewTable();
@@ -478,6 +486,5 @@ public class SqielDatenbankzugriff {
         sq.erzeugeMinMaxInfo();
         sq.erzeugeTippInfo();
         sq.fuegeTippEin(0, 0, 0, false, 0); //Test- Default
-        sq.liesAusTippInfo();
     }
 }
