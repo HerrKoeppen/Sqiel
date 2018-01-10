@@ -52,7 +52,6 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         LAMin = new javax.swing.JLabel();
         BNeuesSpiel = new javax.swing.JButton();
         BNeueRunde = new javax.swing.JButton();
-        TFRundennummer = new javax.swing.JTextField();
         STrennungswand = new javax.swing.JSeparator();
         SPAnzeige = new javax.swing.JScrollPane();
         TAAnzeige = new javax.swing.JTextArea();
@@ -60,6 +59,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         RBPunktestand = new javax.swing.JRadioButton();
         BAuswerten = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        TARundennummer = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,7 +141,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
         LAMin.setText("AMin");
 
-        BNeuesSpiel.setText("Neues Spiel");
+        BNeuesSpiel.setText("Neues Sqiel");
         BNeuesSpiel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BNeuesSpielActionPerformed(evt);
@@ -152,15 +152,6 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         BNeueRunde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BNeueRundeActionPerformed(evt);
-            }
-        });
-
-        TFRundennummer.setEditable(false);
-        TFRundennummer.setColumns(3);
-        TFRundennummer.setEnabled(false);
-        TFRundennummer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFRundennummerActionPerformed(evt);
             }
         });
 
@@ -180,6 +171,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         });
 
         jLabel2.setText("Rundennummer:");
+
+        TARundennummer.setEditable(false);
+        TARundennummer.setColumns(20);
+        TARundennummer.setRows(5);
+        TARundennummer.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,12 +230,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(BAuswerten))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TFRundennummer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(TARundennummer, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RBAdministrator)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(BNeueRunde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -253,26 +248,30 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(LAMax)
                                 .addGap(3, 3, 3))
-                            .addComponent(TFAMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(TFAMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(RBAdministrator)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TFRundennummer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TARundennummer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RBAdministrator)
-                .addGap(39, 39, 39)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
                         .addComponent(BNeuesSpiel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BNeueRunde))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
+                        .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LAMin)
@@ -313,7 +312,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                     .addComponent(RBPunktestand)
                     .addComponent(BGO))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SPAnzeige, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(SPAnzeige, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(PBLadebalken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
@@ -377,8 +376,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
 
             int rundennummer = sq.neuesSpielAnlegen(min, max);
+            rundennummer = 1;
             TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
             TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+            TARundennummer.append(""+rundennummer+"");
+            
         }
     }//GEN-LAST:event_BNeuesSpielActionPerformed
 
@@ -401,8 +403,18 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
 
             int rundennummer = sq.neueRundeAnlegen(min, max);
+            rundennummer = 1;
+            
+            
+                rundennummer=rundennummer+1;
+                TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+                 TARundennummer.append(""+rundennummer+"");
+            
+            
+            
+            
             TAAnzeige.append("Datenbankveränderung für eine neue Runde durchgeführt.\n");
-            TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+           
 
 
         }    }//GEN-LAST:event_BNeueRundeActionPerformed
@@ -419,10 +431,6 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_BAuswertenActionPerformed
-
-    private void TFRundennummerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFRundennummerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TFRundennummerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -485,6 +493,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     private javax.swing.JScrollPane SPAnzeige;
     private javax.swing.JSeparator STrennungswand;
     private javax.swing.JTextArea TAAnzeige;
+    private javax.swing.JTextArea TARundennummer;
     private javax.swing.JTextField TFAMax;
     private javax.swing.JTextField TFAMin;
     private javax.swing.JTextField TFBenutzername;
@@ -492,7 +501,6 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     private javax.swing.JTextField TFMax;
     private javax.swing.JTextField TFMin;
     private javax.swing.JPasswordField TFPasswort;
-    private javax.swing.JTextField TFRundennummer;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
