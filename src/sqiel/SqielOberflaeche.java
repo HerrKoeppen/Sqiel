@@ -435,9 +435,18 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     }//GEN-LAST:event_BNeuesSpielActionPerformed
 
     private void BNeueRundeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeueRundeActionPerformed
-        int rundennummer = Integer.parseInt(TARundennummer.getText());
-        if (sq.kontrolliereRundeVollstaendigGetippt(rundennummer)) {
-            TAAnzeige.append("Runde " + rundennummer + " vollständig betippt. Neue Runde wird erzeugt.");
+        boolean ok = false;
+        if (TARundennummer.getText().equals("")) {
+            ok = true;
+            TAAnzeige.append("Es gibt noch keine Runde. Eine neue Runde kann erzeugt werden.\n");
+        }
+        if (ok == false) {
+            int rundennummer = Integer.parseInt(TARundennummer.getText());
+            ok = sq.kontrolliereRundeVollstaendigGetippt(rundennummer);
+
+        }
+        if (ok) {
+            TAAnzeige.append("Die Runde " + TARundennummer.getText() + " wurde vollständig betippt. Eine neue Runde darf erzeugt werden.\n");
             if (RBAdministrator.isSelected()) {
                 TAAnzeige.append("Eine neue Runde wird angelegt.\n");
                 String t1, t2;
@@ -458,7 +467,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 if (min <= max) {
                     //*int rundennummer = sq.neueRundeAnlegen(min, max);
 
-                    rundennummer = sq.neueRundeAnlegen(min, max);
+                    int rundennummer = sq.neueRundeAnlegen(min, max);
                     String rundennummerS = (new Integer(rundennummer)).toString();
                     TARundennummer.setText(rundennummerS);
                     TFMin.setText("");
@@ -473,9 +482,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
                 }
             }
+        } else {
+            TAAnzeige.append("WARNUNG: Rundennummmer " + TARundennummer.getText() + " noch nicht vollständig betippt! Zunächst alle Tipps eintragen.\n");
 
-
-        }    }//GEN-LAST:event_BNeueRundeActionPerformed
+        }
+		}//GEN-LAST:event_BNeueRundeActionPerformed
 
     private void BAuswertenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAuswertenActionPerformed
         // TODO add your handling code here:
