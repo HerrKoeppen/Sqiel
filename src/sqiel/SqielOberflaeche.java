@@ -348,17 +348,21 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void RBAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBAdministratorActionPerformed
         // TODO add your handling code here:
+         TAAnzeige.append("Administratormodus ist deaktiviert.\n");
+        
          if (RBAdministrator.isSelected()) {
             TAAnzeige.append("Administratormodus ist aktiviert.\n");
+         } else {
+         TAAnzeige.append("Administratormodus ist deaktiviert.\n");
          }
     }//GEN-LAST:event_RBAdministratorActionPerformed
 
     private void BNeuesSpielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeuesSpielActionPerformed
         // TODO add your handling code here:
-        TAAnzeige.append("NeuesSpielKnopf gedrückt.\n");
+        
 
         if (RBAdministrator.isSelected()) {
-            TAAnzeige.append("Administrator-Radio-Button ausgewählt.\n");
+            TAAnzeige.append("Ein neues Sqiel wird angelegt.\n");
             String t1, t2;
             int min = -1;
             int max = -1;
@@ -379,10 +383,10 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     }//GEN-LAST:event_BNeuesSpielActionPerformed
 
     private void BNeueRundeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeueRundeActionPerformed
-        TAAnzeige.append("NeueRundeKnopf gedrückt.\n");
+       
 
         if (RBAdministrator.isSelected()) {
-            TAAnzeige.append("Administrator-Radio-Button ausgewählt.\n");
+             TAAnzeige.append("Eine neue Runde wird angelegt.\n");
             String t1, t2;
             int min = -1;
             int max = -1;
@@ -405,7 +409,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void BAuswertenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAuswertenActionPerformed
         // TODO add your handling code here:
+         
+        
         if (RBAdministrator.isSelected()) {
+           TAAnzeige.append("Das Sqiel wird ausgewertet.\n");
+                       
             sq.auswertenButton();
 
         }
