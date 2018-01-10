@@ -29,17 +29,30 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         TAAnzeige.append("Sqiel sq erzeugt.\n");
         TAAnzeige.append("sq-Setup.Methode ausgeführt. Datenbankanbindung ist da.\n");
         int rundennummer = -1;
+        int mid = -1;
         ResultSet rs = sq.sqDB.fuehreSelectAus("SELECT * FROM RundenInfo");
         try {
             while (rs.next()) {
                 if (rs.getInt("rn") > rundennummer) {
                     rundennummer = rs.getInt("rn");
+                    mid = rs.getInt("m_id");
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (rundennummer > -1) {
+            rs = sq.sqDB.fuehreSelectAus("SELECT * FROM MinMaxInfo");
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("mid") == mid) {
+                        TFMin.setText(Integer.toString(rs.getInt("min")));
+                        TFMax.setText(Integer.toString(rs.getInt("max")));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
+        }
             TARundennummer.setText((new Integer(rundennummer)).toString());
             if (sq.kontrolliereRundeVollstaendigGetippt(rundennummer)) {
                 TAAnzeige.append("Die Runde wurde von allen Mitspielern betippt.\n");
@@ -388,8 +401,6 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void RBAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBAdministratorActionPerformed
         // TODO add your handling code here:
-        TAAnzeige.append("Administratormodus ist deaktiviert.\n");
-
         if (RBAdministrator.isSelected()) {
             TAAnzeige.append("Administratormodus ist aktiviert.\n");
         } else {
