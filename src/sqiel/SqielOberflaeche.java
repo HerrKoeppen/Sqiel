@@ -340,6 +340,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void RBAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBAdministratorActionPerformed
         // TODO add your handling code here:
+         if (RBAdministrator.isSelected()) {
+            TAAnzeige.append("Administratormodus ist aktiviert.\n");
+         }
     }//GEN-LAST:event_RBAdministratorActionPerformed
 
     private void BNeuesSpielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeuesSpielActionPerformed
