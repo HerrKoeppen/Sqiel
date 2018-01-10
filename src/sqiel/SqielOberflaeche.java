@@ -373,9 +373,15 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
 
             int rundennummer = sq.neuesSpielAnlegen(min, max);
+            TARundennummer.setText("");
+            TFMin.setText("");
+            TFMax.setText("");
+            TFMin.setText(""+t1+"");
+            TFMax.setText(""+t2+"");
             TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
             TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
             TARundennummer.append(""+rundennummer+"");
+            
             
         }
     }//GEN-LAST:event_BNeuesSpielActionPerformed
@@ -399,9 +405,13 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
 
             int rundennummer = sq.neueRundeAnlegen(min, max);
-                TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
-                TARundennummer.setText("");
-                TARundennummer.append(""+rundennummer+"");
+            TFMin.setText("");
+            TFMax.setText("");
+            TFMin.setText(""+t1+"");
+            TFMax.setText(""+t2+"");
+            TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+            TARundennummer.setText("");
+            TARundennummer.append(""+rundennummer+"");
             
             
             
