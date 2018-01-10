@@ -276,6 +276,39 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
+    
+    public void liesAusMinMaxInfo() {
+
+        String sql = "SELECT mid , min, max FROM MinMaxInfo";
+
+        try {
+
+            rs = stmt.executeQuery(sql);
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("mid") + "\t"
+                        + rs.getInt("min") + "\t"
+                        + rs.getInt("max") + "\t"
+                       );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+       public void loescheMinMaxInfo(int mid) {
+        String sql = "DELETE mid FROM MinMaxInfo  = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, mid);
+            // execute the delete statement
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * erzeugt die Tabelle TippInfo auf einem bestehenden Datenbankobjekt.
@@ -392,6 +425,35 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
+    
+    
+    
+ public int benutzerpkstd(int rn,int bid) throws SQLException{
+    int bpkst = 0;
+    String sql = "SELECT pkstd FROM TippInfo WHERE rn  = ? AND bid = ?";
+    try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(2, bid);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    ResultSet k = null;
+    for(int i=1; i<= rn; i++) {  
+    try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, i);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    k = fuehreSelectAus(sql);
+    bpkst = k.getInt("pkstd") + bpkst;
+    }
+        
+        
+    return rn;
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
     public String gibAlleTabelleninhalteAus(String tabellenName) {
@@ -429,7 +491,6 @@ public class SqielDatenbankzugriff {
         }
         return "";
     }
-////////////////////////////////////////////////////////////////////////////////////////////
 
 
   public void loescheTabellenInhalte(String tabellenName) {
