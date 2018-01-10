@@ -371,8 +371,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
-
-            int rundennummer = sq.neuesSpielAnlegen(min, max);
+            //*int rundennummer = sq.neueRundeAnlegen(min, max);
+            sq.neuesSpielAnlegen(min, max);
+            int rundennummer = 1;
             TARundennummer.setText("");
             TFMin.setText("");
             TFMax.setText("");
@@ -403,8 +404,14 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
-
-            int rundennummer = sq.neueRundeAnlegen(min, max);
+                
+            //*int rundennummer = sq.neueRundeAnlegen(min, max);
+            sq.neueRundeAnlegen(min, max);
+            String rundennummerS;
+            int rundennummer;
+            rundennummerS = TARundennummer.getText();
+            rundennummer = Integer.parseInt(rundennummerS);
+            rundennummer = rundennummer + 1;
             TFMin.setText("");
             TFMax.setText("");
             TFMin.setText(""+t1+"");
