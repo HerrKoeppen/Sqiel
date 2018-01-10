@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -84,6 +86,7 @@ public class SqielDatenbankzugriff {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Erzeugt die Tabelle BenutzerInfo auf einem bestehenden
      * SqielDatenbankzugriff-Objekt mit Anbindung an eine bestimmte Datenbank.
@@ -196,6 +199,7 @@ public class SqielDatenbankzugriff {
         }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * erzeugt die Tabelle RundenInfo auf einem bestehenden Datenbankobjekt.
      * RundenInfo hat diese Felder: rn, m_id, ctipp
@@ -215,14 +219,14 @@ public class SqielDatenbankzugriff {
         }
 
     }
-    
-    
-    
-     /**
+
+    /**
      *
-     * Fügt einen neuen Eintrag in die RundenInfoTabelle ein. Strutkur der Tabelle: RundenInfo(rn,m_id,ctipp)
-     * 
-     * @param mid Die MinMaxID auf die sich die RUnde bezieht. Dort enthalten sind Minimum und Maximum der Runde
+     * Fügt einen neuen Eintrag in die RundenInfoTabelle ein. Strutkur der
+     * Tabelle: RundenInfo(rn,m_id,ctipp)
+     *
+     * @param mid Die MinMaxID auf die sich die RUnde bezieht. Dort enthalten
+     * sind Minimum und Maximum der Runde
      * @param ctipp Der Computertipp für diese Runde
      */
     public void fuegeRundenInfoEin(int mid, int ctipp) {
@@ -239,6 +243,7 @@ public class SqielDatenbankzugriff {
         }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * erzeugt die Tabelle MinMaxInfo auf einem bestehenden Datenbankobjekt.
      * MinMaxInfo hat diese Felder: mid, max, min
@@ -257,9 +262,11 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-    
-     /**
-     * Fügt einen neuen Eintrag in die MinMaxTabelle ein. Strutkur der Tabelle: MinMaxInfo(mid,max,min)
+
+    /**
+     * Fügt einen neuen Eintrag in die MinMaxTabelle ein. Strutkur der Tabelle:
+     * MinMaxInfo(mid,max,min)
+     *
      * @param min Der eingefügte Wert für das Minimum
      * @param max Der eingefügte Wert für das Maximum
      */
@@ -276,7 +283,7 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public void liesAusMinMaxInfo() {
 
         String sql = "SELECT mid , min, max FROM MinMaxInfo";
@@ -289,13 +296,14 @@ public class SqielDatenbankzugriff {
                 System.out.println(rs.getInt("mid") + "\t"
                         + rs.getInt("min") + "\t"
                         + rs.getInt("max") + "\t"
-                       );
+                );
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-       public void loescheMinMaxInfo(int mid) {
+
+    public void loescheMinMaxInfo(int mid) {
         String sql = "DELETE mid FROM MinMaxInfo  = ?";
 
         try {
@@ -310,6 +318,7 @@ public class SqielDatenbankzugriff {
         }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * erzeugt die Tabelle TippInfo auf einem bestehenden Datenbankobjekt.
      * TippInfo hat diese Felder: tid, btipp, hat_getippt, pkstd, rn, bid
@@ -425,37 +434,59 @@ public class SqielDatenbankzugriff {
             System.out.println(e.getMessage());
         }
     }
-    
-    
-    
- public int benutzerpkstd(int rn,int bid) throws SQLException{
-    int bpkst = 0;
-    String sql = "SELECT pkstd FROM TippInfo WHERE rn  = ? AND bid = ?";
-    try {
+
+    public void aendereTipp(String benutzer, int btipp, int rn) {
+        String sql = "SELECT * FROM BenutzerInfo";
+        try {
+            rs = stmt.executeQuery(sql);
+            int bid = -1;
+            while (rs.next()) {
+                if (rs.getString("benutzer").equals(benutzer)) {
+                    bid = rs.getInt("bid");
+                }
+            }
+            if (bid != -1) {
+                sql = "UPDATE TippInfo SET btipp=?,hat_getippt=?,rn=? WHERE bid=" + bid;
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, btipp);
+                pstmt.setBoolean(2, true);
+                pstmt.setInt(3, rn);
+                pstmt.executeUpdate();
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SqielDatenbankzugriff.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int benutzerpkstd(int rn, int bid) throws SQLException {
+        int bpkst = 0;
+        String sql = "SELECT pkstd FROM TippInfo WHERE rn  = ? AND bid = ?";
+        try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(2, bid);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    ResultSet k = null;
-    for(int i=1; i<= rn; i++) {  
-    try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, i);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        ResultSet k = null;
+        for (int i = 1; i <= rn; i++) {
+            try {
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, i);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            k = fuehreSelectAus(sql);
+            bpkst = k.getInt("pkstd") + bpkst;
         }
-    k = fuehreSelectAus(sql);
-    bpkst = k.getInt("pkstd") + bpkst;
-    }
-        
-        
-    return rn;
+
+        return rn;
     }
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
+
     public String gibAlleTabelleninhalteAus(String tabellenName) {
         try {
             String result = "Tabelle: " + tabellenName + "\n";
@@ -492,8 +523,7 @@ public class SqielDatenbankzugriff {
         return "";
     }
 
-
-  public void loescheTabellenInhalte(String tabellenName) {
+    public void loescheTabellenInhalte(String tabellenName) {
         String sql = "DELETE FROM " + tabellenName;
         try {
             stmt.execute(sql);
@@ -502,40 +532,42 @@ public class SqielDatenbankzugriff {
         }
 
     }
-   
-   
+
     /**
-     * Führt eine beliebige SQL-Select Abfrage an die Tabellen durch. Liefert das Ergebnis in Form eines ResultSet zurück.
-     * Ein ResultSet rs (das hier zurückgegeben wird) kann man so auf bestimmte Inhalte prüfen:
-     * while (rs.next()){
-     *      rs.getInt("tid"); (Das würde dann das Tabellenfeld "tid" der Tabelle zeilenweise auslesen)
-     * }
-     * 
+     * Führt eine beliebige SQL-Select Abfrage an die Tabellen durch. Liefert
+     * das Ergebnis in Form eines ResultSet zurück. Ein ResultSet rs (das hier
+     * zurückgegeben wird) kann man so auf bestimmte Inhalte prüfen: while
+     * (rs.next()){ rs.getInt("tid"); (Das würde dann das Tabellenfeld "tid" der
+     * Tabelle zeilenweise auslesen) }
+     *
      * @param sqlSelectAbfrage Die gewünschte SQL-Select-Abfrage
-     * @return das ResultSet als Abfrage-Ergebnis. Bedienung siehe oben oder in der java-API
+     * @return das ResultSet als Abfrage-Ergebnis. Bedienung siehe oben oder in
+     * der java-API
      */
-    public ResultSet fuehreSelectAus(String sqlSelectAbfrage){
+    public ResultSet fuehreSelectAus(String sqlSelectAbfrage) {
         ResultSet retRS = null;
         try {
 
             retRS = stmt.executeQuery(sqlSelectAbfrage);
-        
-            
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return retRS;
     }
+
     /**
      * Gibt alle Inhalte einer beliebigen Tabelle als String zurück.
+     *
      * @param tabellenName Der Name der Tabelle, die ausgegeben wird
-     * @return String, der die textuelle Darstellung der Tabelle mit Inhalten ist.
+     * @return String, der die textuelle Darstellung der Tabelle mit Inhalten
+     * ist.
      */
     /**
      * @param args the command line arguments
      */
-  //////////////////////////////////////////////////////////////////////////////////////////
- //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
         sq.createNewTable();

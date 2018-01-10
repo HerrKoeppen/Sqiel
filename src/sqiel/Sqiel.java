@@ -5,6 +5,8 @@
  */
 package sqiel;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
@@ -57,7 +59,7 @@ public class Sqiel {
         //ergänze Eintrag in der Tabelle RundenInfo: mID von eben Computertipp
         //Rundennummer zurückgeben
         int rundennummer;
-        rundennummer = neueRundeAnlegen(min,max);
+        rundennummer = neueRundeAnlegen(min, max);
         return rundennummer;
     }
 
@@ -67,23 +69,36 @@ public class Sqiel {
         System.out.println("MinMax eingefügt.");
         //speichere mID dieses Eintrags!
         ResultSet rs = sqDB.fuehreSelectAus("SELECT mid FROM MinMaxInfo WHERE min=" + min + " AND max=" + max + ";");
-        System.out.println("Select ausgeführt. Ergebnis: "+rs);
+        System.out.println("Select ausgeführt. Ergebnis: " + rs);
         int rundennummer = -1;
         if (rs != null) {
             try {
                 //bei mehreren möglichen EInträgen ist nur der erste wichtig, die anderen sind diesem in min und max gleich...
                 int mid = rs.getInt("mid");
-                System.out.println("Mid gefunden: "+mid);
+                System.out.println("Mid gefunden: " + mid);
                 //erzeuge Computertipp zwischen min und max
                 int ctipp = Math.min(max, min) + zufall.nextInt(Math.abs(max - min));
-                System.out.println("ComputerTipp erzeugt: "+ctipp );
+                System.out.println("ComputerTipp erzeugt: " + ctipp);
                 //ergänze Eintrag in der Tabelle RundenInfo: mID von eben Computertipp
                 sqDB.fuegeRundenInfoEin(mid, ctipp);
                 System.out.println("Rundeninfo eingefügt.");
                 rs = sqDB.fuehreSelectAus("SELECT rn FROM RundenInfo WHERE m_id=" + mid + " AND ctipp=" + ctipp + ";");
-                System.out.println("Select ausgeführt. Ergebnis: "+rs);
+                System.out.println("Select ausgeführt. Ergebnis: " + rs);
                 rundennummer = rs.getInt("rn");
-                System.out.println("rn gefunden: "+rundennummer);
+                System.out.println("rn gefunden: " + rundennummer);
+                int anzahlBenutzer = 0;
+                rs = sqDB.fuehreSelectAus("SELECT COUNT(*) FROM BenutzerInfo");
+                if (rs.next()) {
+                    anzahlBenutzer = rs.getInt(1);
+                }
+                System.out.println("Es gibt " + anzahlBenutzer + " Benutzer.");
+                rs = sqDB.fuehreSelectAus("SELECT bid FROM BenutzerInfo");
+                System.out.println("Select durchgeführt. Ergebnis: " + rs);
+                while (rs.next()) {
+                    sqDB.fuegeTippEin(rs.getInt("bid"), rundennummer, -1, false, -1);
+                    System.out.println("Tipp eingefügt mit diesen Werten: btipp=-1, hat_getippt=false, pkstd=-1, rn=" + rundennummer + " ,bid=" + rs.getInt("bid"));
+                }
+                gibAlleTabelleAus();
 
             } catch (SQLException ex) {
                 Logger.getLogger(Sqiel.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,6 +106,68 @@ public class Sqiel {
         }
         return rundennummer;
 
+    }
+
+    public void gibAlleTabelleAus() {
+        System.out.println(sqDB.gibAlleTabelleninhalteAus("BenutzerInfo"));
+        System.out.println(sqDB.gibAlleTabelleninhalteAus("RundenInfo"));
+        System.out.println(sqDB.gibAlleTabelleninhalteAus("MinMaxInfo"));
+        System.out.println(sqDB.gibAlleTabelleninhalteAus("TippInfo"));
+
+    }
+
+    public boolean kontrolliereAnmeldeinfo(String benutzerName, String passwort) {
+        gibAlleTabelleAus();
+        boolean anmeldungKorrekt = false;
+        ResultSet rs = sqDB.fuehreSelectAus("SELECT * FROM BenutzerInfo");
+        String hashtext = "";
+        MessageDigest m;
+        try {
+            m = MessageDigest.getInstance("MD5");
+            m.reset();
+            m.update(passwort.getBytes());
+            byte[] digest = m.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            hashtext = bigInt.toString(16);
+            // Now we need to zero pad it if you actually want the full 32 chars.
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            while (rs.next()) {
+                if (rs.getString("benutzer").equals(benutzerName)) {
+                    String tabellenPasswort = rs.getString("passwort");
+                    if (tabellenPasswort.equals(hashtext)) {
+                        anmeldungKorrekt = true;
+
+                    }
+                }
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Sqiel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return anmeldungKorrekt;
+    }
+
+    public boolean kontrolliereRundeVollstaendigGetippt(int rundennummer) {
+        boolean retVal = false;
+        boolean kontrolle = true;
+        ResultSet rs = sqDB.fuehreSelectAus("SELECT * FROM TippInfo WHERE rn = " + rundennummer);
+        try {
+            while (rs.next()) {
+                if (rs.getBoolean("hat_getippt") == false) {
+                    kontrolle = false;
+                }
+               
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Sqiel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (kontrolle == true) {
+            retVal = true;
+        }
+        return retVal;
     }
 
     public void auswertenButton() {

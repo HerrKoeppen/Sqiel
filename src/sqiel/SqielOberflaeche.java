@@ -5,6 +5,11 @@
  */
 package sqiel;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author koeppen
@@ -23,6 +28,28 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         TAAnzeige.append("Oberfläche geladen.\n");
         TAAnzeige.append("Sqiel sq erzeugt.\n");
         TAAnzeige.append("sq-Setup.Methode ausgeführt. Datenbankanbindung ist da.\n");
+        int rundennummer = -1;
+        ResultSet rs = sq.sqDB.fuehreSelectAus("SELECT * FROM RundenInfo");
+        try {
+            while (rs.next()) {
+                if (rs.getInt("rn") > rundennummer) {
+                    rundennummer = rs.getInt("rn");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (rundennummer > -1) {
+            TARundennummer.setText((new Integer(rundennummer)).toString());
+            if (sq.kontrolliereRundeVollstaendigGetippt(rundennummer)) {
+                TAAnzeige.append("Die Runde wurde von allen Mitspielern betippt.\n");
+            } else {
+                TAAnzeige.append("ACHTUNG: Die Runde ist noch nicht vollständig betippt.\n");
+            }
+        } else {
+            TAAnzeige.append("Es wurde noch keine Runde erzeugt.\n");
+        }
+
     }
 
     /**
@@ -335,8 +362,25 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     }//GEN-LAST:event_TFBenutzernameActionPerformed
 
     private void BGOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BGOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BGOActionPerformed
+        TAAnzeige.append("Go-Button gedrückt.\n");
+        String benutzer = TFBenutzername.getText();
+        String passwort = TFPasswort.getText();
+        TAAnzeige.append("Benutzer und Passwort ausgelesen: " + benutzer + " " + passwort + "\n");
+        if (sq.kontrolliereAnmeldeinfo(benutzer, passwort)) {
+            TAAnzeige.append("Anmeldeinfo geprüft und korrekt.\n");
+            String benutzerTipp = TFDeinTipp.getText();
+            try {
+                int btipp = Integer.parseInt(benutzerTipp);
+                TAAnzeige.append("Benutzertipp ausgelesen: " + btipp + "\n");
+                sq.sqDB.aendereTipp(benutzer, btipp, Integer.parseInt(TARundennummer.getText()));
+                TAAnzeige.append("Tipp verändert.\n");
+                sq.gibAlleTabelleAus();
+            } catch (NumberFormatException nfe) {
+                TAAnzeige.append("FEHLER: Benutzertipp ist keine Zahl.");
+            }
+        } else {
+            TAAnzeige.append("FEHLER: Anmeldeinfo falsch.\n");
+        }    }//GEN-LAST:event_BGOActionPerformed
 
     private void TFDeinTippActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFDeinTippActionPerformed
         // TODO add your handling code here:
@@ -344,18 +388,17 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void RBAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBAdministratorActionPerformed
         // TODO add your handling code here:
-         TAAnzeige.append("Administratormodus ist deaktiviert.\n");
-        
-         if (RBAdministrator.isSelected()) {
+        TAAnzeige.append("Administratormodus ist deaktiviert.\n");
+
+        if (RBAdministrator.isSelected()) {
             TAAnzeige.append("Administratormodus ist aktiviert.\n");
-         } else {
-         TAAnzeige.append("Administratormodus ist deaktiviert.\n");
-         }
+        } else {
+            TAAnzeige.append("Administratormodus ist deaktiviert.\n");
+        }
     }//GEN-LAST:event_RBAdministratorActionPerformed
 
     private void BNeuesSpielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeuesSpielActionPerformed
         // TODO add your handling code here:
-        
 
         if (RBAdministrator.isSelected()) {
             TAAnzeige.append("Ein neues Sqiel wird angelegt.\n");
@@ -370,83 +413,76 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             } catch (NumberFormatException nfe) {
                 TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
-            if(max <= min){
+            if (max <= min) {
                 TAAnzeige.append("FEHLER:max ist kleiner als min!\n ");
-            }if
-            (min <= max)           {
-            TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
-            //*int rundennummer = sq.neueRundeAnlegen(min, max);
-            sq.neuesSpielAnlegen(min, max);
-            int rundennummer = 1;
-            TARundennummer.setText("");
-            TFMin.setText("");
-            TFMax.setText("");
-            TFMin.setText(""+t1+"");
-            TFMax.setText(""+t2+"");
-            TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
-            TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
-            TARundennummer.append(""+rundennummer+"");  
             }
-            
-            
+            if (min <= max) {
+                TAAnzeige.append("Felder Min als " + min + " und Max als " + max + " gesetzt.\n");
+                //*int rundennummer = sq.neueRundeAnlegen(min, max);
+                sq.neuesSpielAnlegen(min, max);
+                int rundennummer = 1;
+                TARundennummer.setText("1");
+                TFMin.setText("");
+                TFMax.setText("");
+                TFMin.setText("" + t1 + "");
+                TFMax.setText("" + t2 + "");
+                TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
+                TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+                TARundennummer.append("" + rundennummer + "");
+            }
+
         }
     }//GEN-LAST:event_BNeuesSpielActionPerformed
 
     private void BNeueRundeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeueRundeActionPerformed
-       
+        int rundennummer = Integer.parseInt(TARundennummer.getText());
+        if (sq.kontrolliereRundeVollstaendigGetippt(rundennummer)) {
+            TAAnzeige.append("Runde " + rundennummer + " vollständig betippt. Neue Runde wird erzeugt.");
+            if (RBAdministrator.isSelected()) {
+                TAAnzeige.append("Eine neue Runde wird angelegt.\n");
+                String t1, t2;
+                int min = -1;
+                int max = -1;
+                t1 = TFAMin.getText();
+                t2 = TFAMax.getText();
+                try {
+                    min = Integer.parseInt(t1);
+                    max = Integer.parseInt(t2);
+                } catch (NumberFormatException nfe) {
+                    TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
+                }
+                TAAnzeige.append("Felder Min als " + min + " und Max als " + max + " gesetzt.\n");
+                if (max <= min) {
+                    TAAnzeige.append("FEHLER:max ist kleiner als min!\n ");
+                }
+                if (min <= max) {
+                    //*int rundennummer = sq.neueRundeAnlegen(min, max);
 
-        if (RBAdministrator.isSelected()) {
-             TAAnzeige.append("Eine neue Runde wird angelegt.\n");
-            String t1, t2;
-            int min = -1;
-            int max = -1;
-            t1 = TFAMin.getText();
-            t2 = TFAMax.getText();
-            try {
-                min = Integer.parseInt(t1);
-                max = Integer.parseInt(t2);
-            } catch (NumberFormatException nfe) {
-                TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
-            }
-            TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
-            if(max <= min){
-                TAAnzeige.append("FEHLER:max ist kleiner als min!\n ");
-            }
-            if(min <= max){
-            //*int rundennummer = sq.neueRundeAnlegen(min, max);
-            
-            sq.neueRundeAnlegen(min, max);
-            String rundennummerS;
-            int rundennummer;
-            rundennummerS = TARundennummer.getText();
-            rundennummer = Integer.parseInt(rundennummerS);
-            rundennummer = rundennummer + 1;
-            TFMin.setText("");
-            TFMax.setText("");
-            TFMin.setText(""+t1+"");
-            TFMax.setText(""+t2+"");
-            TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
-            TARundennummer.setText("");
-            TARundennummer.append(""+rundennummer+"");
-            
-            
-            
-            TAAnzeige.append("Datenbankveränderung für eine neue Runde durchgeführt.\n");
-                
-            }
+                    rundennummer = sq.neueRundeAnlegen(min, max);
+                    String rundennummerS = (new Integer(rundennummer)).toString();
+                    TARundennummer.setText(rundennummerS);
+                    TFMin.setText("");
+                    TFMax.setText("");
+                    TFMin.setText("" + t1 + "");
+                    TFMax.setText("" + t2 + "");
+                    TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
+                    //TARundennummer.setText("");
+                    //TARundennummer.append("" + rundennummer + "");
 
-           
+                    TAAnzeige.append("Datenbankveränderung für eine neue Runde durchgeführt.\n");
+
+                }
+            }
 
 
         }    }//GEN-LAST:event_BNeueRundeActionPerformed
 
     private void BAuswertenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAuswertenActionPerformed
         // TODO add your handling code here:
-         
-        
+
         if (RBAdministrator.isSelected()) {
-           TAAnzeige.append("Das Sqiel wird ausgewertet.\n");
-                       
+            TAAnzeige.append("Das Sqiel wird ausgewertet.\n");
+
             sq.auswertenButton();
 
         }
