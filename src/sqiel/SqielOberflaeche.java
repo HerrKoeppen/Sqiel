@@ -376,7 +376,6 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
 
             int rundennummer = sq.neuesSpielAnlegen(min, max);
-            rundennummer = 1;
             TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
             TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
             TARundennummer.append(""+rundennummer+"");
@@ -403,13 +402,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
 
             int rundennummer = sq.neueRundeAnlegen(min, max);
-            rundennummer = 1;
-            
-            
-                rundennummer=rundennummer+1;
                 TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
-                 TARundennummer.append(""+rundennummer+"");
-            
+                TARundennummer.setText("");
+                TARundennummer.append(""+rundennummer+"");
             
             
             
