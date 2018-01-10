@@ -370,6 +370,10 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             } catch (NumberFormatException nfe) {
                 TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
+            if(max <= min){
+                TAAnzeige.append("FEHLER:max ist kleiner als min!\n ");
+            }if
+            (min <= max)           {
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
             //*int rundennummer = sq.neueRundeAnlegen(min, max);
             sq.neuesSpielAnlegen(min, max);
@@ -381,7 +385,8 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             TFMax.setText(""+t2+"");
             TAAnzeige.append("Datenbankveränderung für ein neues Spiel durchgeführt.\n");
             TAAnzeige.append("Rundennumer:" + rundennummer + "\n");
-            TARundennummer.append(""+rundennummer+"");
+            TARundennummer.append(""+rundennummer+"");  
+            }
             
             
         }
@@ -404,8 +409,12 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
             }
             TAAnzeige.append("Felder Min als "+min+" und Max als "+max+" gesetzt.\n");
-                
+            if(max <= min){
+                TAAnzeige.append("FEHLER:max ist kleiner als min!\n ");
+            }
+            if(min <= max){
             //*int rundennummer = sq.neueRundeAnlegen(min, max);
+            
             sq.neueRundeAnlegen(min, max);
             String rundennummerS;
             int rundennummer;
@@ -423,6 +432,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             
             
             TAAnzeige.append("Datenbankveränderung für eine neue Runde durchgeführt.\n");
+                
+            }
+
            
 
 
