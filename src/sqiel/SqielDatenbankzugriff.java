@@ -459,11 +459,11 @@ public class SqielDatenbankzugriff {
         }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void erzeugeAuswertumg() {
-         String sql = "CREATE TABLE IF NOT EXISTS TippInfo (\n"
-                + "aid INTEGER,\n"
-                + "Primary Key (aid),\n"
-                + " rang INTEGER NOT NULL,\n"
+    public void erzeugeAuswertung() {
+         String sql = "CREATE TABLE IF NOT EXISTS Auswertung (\n"
+                + " aid INTEGER,\n"
+                + " Primary Key (aid),\n"
+                + " rang INTEGER ,\n"
                 + " pkstd INTEGER,\n"
                 + " bid INTEGER,\n"
                 + " FOREIGN KEY(bid) REFERENCES BenutzerInfo(bid));";
@@ -475,13 +475,40 @@ public class SqielDatenbankzugriff {
         }
     }
     
+    
+    
+// vielleicht sollte man die rn als "globale "  variable Hinzufügen und sie immerwieder andern 
+    public void rangZuordnen() throws SQLException{
+        String sql = "Select* From Auswertung IN ORDER BY pkstd ";
+        ResultSet k= fuehreSelectAus(sql);
+        int i =0;
+        while(k.next()){
+              i++;
+                aendereRang(k.getInt("aid"),i);
+    }
+    }
+    public void aendereRang(int aid, int nrang) {
+        String sql = "UPDATE Auswertung SET Rang = ?  "
+                + "WHERE aid = ?";
 
+        try {
+            pstmt = conn.prepareStatement(sql);
+            // set the corresponding param
+            pstmt.setInt(1, nrang);
+            pstmt.setInt(2, aid);
+            // update 
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public int benutzerpkstdA(int rn,int bid) throws SQLException{
         int bpkst = 0;
         String sql;
         ResultSet k;
         for(int i=1; i<= rn; i++) {  
-            sql = "SELECT FROM TippInfo WHERE bid = " + bid + " AND rn =  " + i ;
+            sql = "SELECT * FROM TippInfo WHERE bid = " + bid + " AND rn =  " + i ;
             k = fuehreSelectAus(sql);
             bpkst = k.getInt("pkstd") + bpkst;
         } 
@@ -491,7 +518,7 @@ public class SqielDatenbankzugriff {
    
     public int benutzerpkstdB(int rn,int bid) throws SQLException{
         int bpkst = 0;
-        ResultSet k = fuehreSelectAus( "SELECT  FROM TippInfo WHERE bid = " + bid );
+        ResultSet k = fuehreSelectAus( "SELECT * FROM TippInfo WHERE bid = " + bid );
         while (k.next()){
             if (k.getInt("rn")<= rn ){
                 bpkst = k.getInt("pkstd") + bpkst;
@@ -589,11 +616,12 @@ public class SqielDatenbankzugriff {
     //////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
+        
         sq.erzeugeBenutzerInfo();
         sq.erzeugeRundenInfo();
         sq.erzeugeMinMaxInfo();
         sq.erzeugeTippInfo();
-        sq.erzeugeAuswertumg();
+        sq.erzeugeAuswertung();
         
         sq.gibAlleTabelleninhalteAus("TippInfo");
         sq.gibAlleTabelleninhalteAus("MinMaxInfo");
