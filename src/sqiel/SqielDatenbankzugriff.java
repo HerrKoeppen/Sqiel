@@ -601,6 +601,6 @@ public class SqielDatenbankzugriff {
         sq.gibAlleTabelleninhalteAus("BenutzerInfo");
         sq.gibAlleTabelleninhalteAus("Auswertung");
         
-        s
+        
     }
 }
