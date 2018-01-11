@@ -458,32 +458,51 @@ public class SqielDatenbankzugriff {
             Logger.getLogger(SqielDatenbankzugriff.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public int benutzerpkstd(int rn, int bid) throws SQLException {
-        int bpkst = 0;
-        String sql = "SELECT pkstd FROM TippInfo WHERE rn  = ? AND bid = ?";
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void erzeugeAuswertumg() {
+         String sql = "CREATE TABLE IF NOT EXISTS TippInfo (\n"
+                + "aid INTEGER,\n"
+                + "Primary Key (aid),\n"
+                + " rang INTEGER NOT NULL,\n"
+                + " pkstd INTEGER,\n"
+                + " bid INTEGER,\n"
+                + " FOREIGN KEY(bid) REFERENCES BenutzerInfo(bid));";
+                
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(2, bid);
-            pstmt.executeUpdate();
+            stmt.execute(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        ResultSet k = null;
-        for (int i = 1; i <= rn; i++) {
-            try {
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, i);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+    }
+    
+
+    public int benutzerpkstdA(int rn,int bid) throws SQLException{
+        int bpkst = 0;
+        String sql;
+        ResultSet k;
+        for(int i=1; i<= rn; i++) {  
+            sql = "SELECT FROM TippInfo WHERE bid = " + bid + " AND rn =  " + i ;
             k = fuehreSelectAus(sql);
             bpkst = k.getInt("pkstd") + bpkst;
-        }
-
-        return rn;
+        } 
+        return bpkst;
     }
+ 
+   
+    public int benutzerpkstdB(int rn,int bid) throws SQLException{
+        int bpkst = 0;
+        ResultSet k = fuehreSelectAus( "SELECT  FROM TippInfo WHERE bid = " + bid );
+        while (k.next()){
+            if (k.getInt("rn")<= rn ){
+                bpkst = k.getInt("pkstd") + bpkst;
+            }
+            else {
+                return bpkst;
+            }
+         }
+        return bpkst;
+    }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -570,14 +589,18 @@ public class SqielDatenbankzugriff {
     //////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
-        sq.createNewTable();
-        sq.kreierebenutzerinfo();
         sq.erzeugeBenutzerInfo();
-        sq.fuegeBenutzerEin("koeppen", "900150983cd24fb0d6963f7d28e17f72");
-        sq.liesAusBenutzerInfo();
         sq.erzeugeRundenInfo();
         sq.erzeugeMinMaxInfo();
         sq.erzeugeTippInfo();
-        sq.fuegeTippEin(0, 0, 0, false, 0); //Test- Default
+        sq.erzeugeAuswertumg();
+        
+        sq.gibAlleTabelleninhalteAus("TippInfo");
+        sq.gibAlleTabelleninhalteAus("MinMaxInfo");
+        sq.gibAlleTabelleninhalteAus("RundenInfo");
+        sq.gibAlleTabelleninhalteAus("BenutzerInfo");
+        sq.gibAlleTabelleninhalteAus("Auswertung");
+        
+        s
     }
 }
