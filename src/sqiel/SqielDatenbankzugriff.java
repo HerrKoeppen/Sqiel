@@ -458,32 +458,78 @@ public class SqielDatenbankzugriff {
             Logger.getLogger(SqielDatenbankzugriff.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void erzeugeAuswertung() {
+         String sql = "CREATE TABLE IF NOT EXISTS Auswertung (\n"
+                + " aid INTEGER,\n"
+                + " Primary Key (aid),\n"
+                + " rang INTEGER ,\n"
+                + " pkstd INTEGER,\n"
+                + " bid INTEGER,\n"
+                + " FOREIGN KEY(bid) REFERENCES BenutzerInfo(bid));";
+                
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
+    
+// vielleicht sollte man die rn als "globale "  variable Hinzufügen und sie immerwieder andern 
+    public void rangZuordnen() throws SQLException{
+        String sql = "Select* From Auswertung IN ORDER BY pkstd ";
+        ResultSet k= fuehreSelectAus(sql);
+        int i =0;
+        while(k.next()){
+              i++;
+                aendereRang(k.getInt("aid"),i);
+    }
+    }
+    public void aendereRang(int aid, int nrang) {
+        String sql = "UPDATE Auswertung SET Rang = ?  "
+                + "WHERE aid = ?";
 
-    public int benutzerpkstd(int rn, int bid) throws SQLException {
-        int bpkst = 0;
-        String sql = "SELECT pkstd FROM TippInfo WHERE rn  = ? AND bid = ?";
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(2, bid);
+            // set the corresponding param
+            pstmt.setInt(1, nrang);
+            pstmt.setInt(2, aid);
+            // update 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        ResultSet k = null;
-        for (int i = 1; i <= rn; i++) {
-            try {
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, i);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+    }
+    
+    public int benutzerpkstdA(int rn,int bid) throws SQLException{
+        int bpkst = 0;
+        String sql;
+        ResultSet k;
+        for(int i=1; i<= rn; i++) {  
+            sql = "SELECT * FROM TippInfo WHERE bid = " + bid + " AND rn =  " + i ;
             k = fuehreSelectAus(sql);
             bpkst = k.getInt("pkstd") + bpkst;
-        }
-
-        return rn;
+        } 
+        return bpkst;
     }
+ 
+   
+    public int benutzerpkstdB(int rn,int bid) throws SQLException{
+        int bpkst = 0;
+        ResultSet k = fuehreSelectAus( "SELECT * FROM TippInfo WHERE bid = " + bid );
+        while (k.next()){
+            if (k.getInt("rn")<= rn ){
+                bpkst = k.getInt("pkstd") + bpkst;
+            }
+            else {
+                return bpkst;
+            }
+         }
+        return bpkst;
+    }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -570,14 +616,19 @@ public class SqielDatenbankzugriff {
     //////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         SqielDatenbankzugriff sq = new SqielDatenbankzugriff("theDB");
-        sq.createNewTable();
-        sq.kreierebenutzerinfo();
+        
         sq.erzeugeBenutzerInfo();
-        sq.fuegeBenutzerEin("koeppen", "900150983cd24fb0d6963f7d28e17f72");
-        sq.liesAusBenutzerInfo();
         sq.erzeugeRundenInfo();
         sq.erzeugeMinMaxInfo();
         sq.erzeugeTippInfo();
-        sq.fuegeTippEin(0, 0, 0, false, 0); //Test- Default
+        sq.erzeugeAuswertung();
+        
+        sq.gibAlleTabelleninhalteAus("TippInfo");
+        sq.gibAlleTabelleninhalteAus("MinMaxInfo");
+        sq.gibAlleTabelleninhalteAus("RundenInfo");
+        sq.gibAlleTabelleninhalteAus("BenutzerInfo");
+        sq.gibAlleTabelleninhalteAus("Auswertung");
+        
+        
     }
 }
