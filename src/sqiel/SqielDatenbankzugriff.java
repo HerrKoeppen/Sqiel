@@ -446,11 +446,11 @@ public class SqielDatenbankzugriff {
                 }
             }
             if (bid != -1) {
-                sql = "UPDATE TippInfo SET btipp=?,hat_getippt=?,rn=? WHERE bid=" + bid;
+                sql = "UPDATE TippInfo SET btipp=?,hat_getippt=? WHERE bid=" + bid+" AND rn="+rn+";";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, btipp);
                 pstmt.setBoolean(2, true);
-                pstmt.setInt(3, rn);
+//                pstmt.setInt(3, rn);
                 pstmt.executeUpdate();
 
             }

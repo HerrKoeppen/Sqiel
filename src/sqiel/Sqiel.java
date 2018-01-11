@@ -9,6 +9,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,12 +32,15 @@ public class Sqiel {
         sqDB.erzeugeBenutzerInfo();
         //fuege alle Benutzer ein
         sqDB.fuegeBenutzerEin("koeppen", "59747f5564a5470b3a191f67ca469301");
+        sqDB.fuegeBenutzerEin("koeppen2", "59747f5564a5470b3a191f67ca469301");
+        /*
         sqDB.fuegeBenutzerEin("louie", "b6ea4320f72d92669405dda0d07eefdd");
         sqDB.fuegeBenutzerEin("JoP", "ee7b630995e7a36b6420696989441e2d");
         sqDB.fuegeBenutzerEin("Lion", "60d28e7d879c0dc48b9a593468cf11e5");
         sqDB.fuegeBenutzerEin("Leon", "e48b7bf1a447021da85214b43f51fd4e");
         sqDB.fuegeBenutzerEin("Timon", "a13fed3ea354889ea7675a4b84365497");
         sqDB.fuegeBenutzerEin("Hannah", "cf82a9577f8e6fa17ce3ccf4daaf94e9");
+         */
         //lege MinMaxInfo-Tabelle an
         sqDB.erzeugeMinMaxInfo();
         //lege Tabelle TippInfo an
@@ -159,7 +164,7 @@ public class Sqiel {
                 if (rs.getBoolean("hat_getippt") == false) {
                     kontrolle = false;
                 }
-               
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(Sqiel.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,11 +175,114 @@ public class Sqiel {
         return retVal;
     }
 
-    public void auswertenButton() {
-        //alle Punktestände einer Person werden addiert und das für alle Personen
-        // die einzelnen Punktestände werden in TAAnzeige angezeigt
-        // danach kann ein neues Spiel gestartet werden
+    public void auswertenButton(int aktuelleRunde) {
+        //haben schon alle getippt?
+        if (!kontrolliereRundeVollstaendigGetippt(aktuelleRunde)) {
+            System.out.println("ACHTUNG: Aktuelle Runde " + aktuelleRunde + " noch nicht vollständig getippt. Zuerst zuende tippen!");
+        } else {
+            //anzahl Benutzer finden
+            int anzahlBenutzer = 0;
+            ResultSet rs = sqDB.fuehreSelectAus("SELECT COUNT(*) FROM BenutzerInfo");
+            System.out.println("Abfrage durchgeführt. Ergebnis: " + rs);
 
+            try {
+                if (rs.next()) {
+                    anzahlBenutzer = rs.getInt(1);
+                    System.out.println("Gefundene Anzahl Benutzer: " + anzahlBenutzer);
+                }
+                //sammle alle Tipps für diese Runde
+                ArrayList<BidTippSammelobjekt> al = new ArrayList();
+                rs = sqDB.fuehreSelectAus("SELECT * FROM TippInfo WHERE rn=" + aktuelleRunde);
+                System.out.println("Abfrage durchgeführt. Ergebnis: " + rs);
+                while (rs.next()) {
+                    al.add(new BidTippSammelobjekt(rs.getInt("bid"), rs.getInt("btipp")));
+                    System.out.println("Objekt mit diesen Werten erzeugt: bid=" + rs.getInt("bid") + " btipp= " + rs.getInt("btipp"));
+                }
+                rs = sqDB.fuehreSelectAus("SELECT * FROM RundenInfo WHERE rn=" + aktuelleRunde);
+                System.out.println("Abfrage durchgeführt. Ergebnis: " + rs);
+                int ctipp = rs.getInt("ctipp");
+                System.out.println("Computertipp ausgelesen" + ctipp);
+                al = ergaenzePunkteZuAl(al, ctipp);
+                int pkstdAlt = 0;
+                for (BidTippSammelobjekt obj : al) {
+                    //alten Punktestand sammeln
+                    rs = sqDB.fuehreSelectAus("SELECT * FROM TippInfo WHERE bid=" + obj.bid);
+                    System.out.println("Abfrage durchgeführt. Ergebnis: " + rs);
+                    pkstdAlt = rs.getInt("pkstd");
+                    if (pkstdAlt == -1) {
+                        pkstdAlt = 0;
+                    }
+                    System.out.println("Alten Punktestand ausgelesen:" + pkstdAlt);
+                    sqDB.fuehreSelectAus("UPDATE TippInfo SET pkstd=" + (pkstdAlt + obj.punkte) + " WHERE bid=" + obj.bid);
+                    System.out.println("Update durchgeführt.");
+                }
+                //Tipptabelle sortiert nach Punktestand auslesen
+                //Benutzernamen zu bid finden
+                gibAlleTabelleAus();
+                //Tabelle benutzer | punktestand in TAAnzeige ausgeben
+            } catch (SQLException ex) {
+                Logger.getLogger(Sqiel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public ArrayList<BidTippSammelobjekt> ergaenzePunkteZuAl(ArrayList<BidTippSammelobjekt> al, int ctipp) {
+        ArrayList<BidTippSammelobjekt> retVal = (ArrayList<BidTippSammelobjekt>) al.clone();
+        int min = -1;
+        int abs = -1;
+        System.out.println(Arrays.toString(retVal.toArray()));
+        System.out.println("Größe von retVal: " + retVal.size());
+        int verbleibendeSpieler = 0;
+        //boolean spielerUebrig = true;
+        for (int i = 0; i <= retVal.size(); i = i + 1) {
+
+            for (BidTippSammelobjekt obj : retVal) {
+                if (obj.punkte == -1) {
+                    verbleibendeSpieler += 1;
+                    abs = Math.abs(obj.Tipp - ctipp);
+                    System.out.println("Neuer abs-Wert: " + abs);
+                    if (min == -1 || abs < min) {
+                        System.out.println("min-Wert: " + min);
+                        min = abs;
+                        System.out.println("geänderter min-Wert: " + min);
+
+                    }
+                }
+                else{
+                    System.out.println("Objekt zum Zählen ignoriert!");
+                }
+                System.out.println("Ermittelte verbleibende Spieler: " + verbleibendeSpieler);
+
+            }
+            /*
+            if (verbleibendeSpieler == 0) {
+                spielerUebrig = false;
+            }
+             */
+            for (BidTippSammelobjekt obj : retVal) {
+                if (obj.punkte == -1) {
+                    System.out.println("Unbepunktetes Objekt gefunden: "+obj.bid);
+                    if (Math.abs(obj.Tipp - ctipp) == min) {
+                        if (verbleibendeSpieler == 0) {
+                            obj.punkte = 0;
+                            System.out.println("Objektbepunktung: 0");
+                        } else {
+                            obj.punkte = verbleibendeSpieler - 1;
+                            System.out.println("Objektbepunktung: "+obj.punkte);
+                        }
+                    }
+                }
+            }
+            verbleibendeSpieler = 0;
+            min = -1;
+            abs = -1;
+        }
+        //Ausgabe zu Kontrollzwecken
+        for (BidTippSammelobjekt obj : retVal) {
+            System.out.println(obj.bid + " " + obj.Tipp + " " + obj.punkte);
+        }
+        return retVal;
     }
 
     /**

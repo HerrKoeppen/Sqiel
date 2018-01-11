@@ -48,11 +48,11 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                     if (rs.getInt("mid") == mid) {
                         TFMin.setText(Integer.toString(rs.getInt("min")));
                         TFMax.setText(Integer.toString(rs.getInt("max")));
+                    }
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
-        }
             TARundennummer.setText((new Integer(rundennummer)).toString());
             if (sq.kontrolliereRundeVollstaendigGetippt(rundennummer)) {
                 TAAnzeige.append("Die Runde wurde von allen Mitspielern betippt.\n");
@@ -385,6 +385,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
             try {
                 int btipp = Integer.parseInt(benutzerTipp);
                 TAAnzeige.append("Benutzertipp ausgelesen: " + btipp + "\n");
+                //sq.sqDB.fuehreSelectAus("UPDATE TippInfo SET ")
                 sq.sqDB.aendereTipp(benutzer, btipp, Integer.parseInt(TARundennummer.getText()));
                 TAAnzeige.append("Tipp verändert.\n");
                 sq.gibAlleTabelleAus();
@@ -410,8 +411,9 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void BNeuesSpielActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BNeuesSpielActionPerformed
         // TODO add your handling code here:
-
+        RBAdministrator.setSelected(false); //shall not work!!
         if (RBAdministrator.isSelected()) {
+            RBAdministrator.setSelected(false);
             TAAnzeige.append("Ein neues Sqiel wird angelegt.\n");
             String t1, t2;
             int min = -1;
@@ -459,18 +461,22 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         if (ok) {
             TAAnzeige.append("Die Runde " + TARundennummer.getText() + " wurde vollständig betippt. Eine neue Runde darf erzeugt werden.\n");
             if (RBAdministrator.isSelected()) {
+                RBAdministrator.setSelected(false);
                 TAAnzeige.append("Eine neue Runde wird angelegt.\n");
                 String t1, t2;
                 int min = -1;
                 int max = -1;
                 t1 = TFAMin.getText();
                 t2 = TFAMax.getText();
+                
                 try {
                     min = Integer.parseInt(t1);
                     max = Integer.parseInt(t2);
                 } catch (NumberFormatException nfe) {
                     TAAnzeige.append("FEHLER: Problem mit der Zahlenerkennung in Feld Min oder Max!\n");
                 }
+                TFAMin.setText("");
+                TFAMax.setText("");
                 TAAnzeige.append("Felder Min als " + min + " und Max als " + max + " gesetzt.\n");
                 if (max <= min) {
                     TAAnzeige.append("FEHLER:max ist kleiner als min!\n ");
@@ -503,9 +509,13 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if (RBAdministrator.isSelected()) {
+            RBAdministrator.setSelected(false);
             TAAnzeige.append("Das Sqiel wird ausgewertet.\n");
+            if (TARundennummer.getText().equals("")) {
 
-            sq.auswertenButton();
+            } else {
+                sq.auswertenButton(Integer.parseInt(TARundennummer.getText()));
+            }
 
         }
 
