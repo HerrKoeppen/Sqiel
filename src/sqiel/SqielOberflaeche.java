@@ -383,24 +383,22 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         // TODO add your handling code here:
         String tmax;
         tmax = TFAMax.getText();
-        
+
         if (tmax.isEmpty() == true) {
-        TAAnzeige.append("Es fehlt ein Maximum");
-        
-        
+            TAAnzeige.append("Es fehlt ein Maximum");
+
         }
-        
+
     }//GEN-LAST:event_TFAMaxActionPerformed
 
     private void TFAMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFAMinActionPerformed
         // TODO add your handling code here:
         String tmin;
         tmin = TFAMin.getText();
-        
+
         if (tmin.isEmpty() == true) {
-        TAAnzeige.append("Es fehlt ein Minimum");
-        
-        
+            TAAnzeige.append("Es fehlt ein Minimum");
+
         }
     }//GEN-LAST:event_TFAMinActionPerformed
 
@@ -412,7 +410,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         TAAnzeige.append("Go-Button gedrückt.\n");
         String benutzer = TFBenutzername.getText();
         String passwort = TFPasswort.getText();
-        TAAnzeige.append("Benutzer und Passwort ausgelesen: " + benutzer + " " + passwort + "\n");
+        //TAAnzeige.append("Benutzer und Passwort ausgelesen: " + benutzer + " " + passwort + "\n");
         if (sq.kontrolliereAnmeldeinfo(benutzer, passwort)) {
             TAAnzeige.append("Anmeldeinfo geprüft und korrekt.\n");
             String benutzerTipp = TFDeinTipp.getText();
@@ -422,6 +420,10 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 //sq.sqDB.fuehreSelectAus("UPDATE TippInfo SET ")
                 sq.sqDB.aendereTipp(benutzer, btipp, Integer.parseInt(TARundennummer.getText()));
                 TAAnzeige.append("Tipp verändert.\n");
+                TFBenutzername.setText("");
+                TFPasswort.setText("");
+                TFDeinTipp.setText("");
+                
                 sq.gibAlleTabelleAus();
             } catch (NumberFormatException nfe) {
                 TAAnzeige.append("FEHLER: Benutzertipp ist keine Zahl.");
@@ -436,8 +438,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
 
     private void RBAdministratorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBAdministratorActionPerformed
         // TODO add your handling code here:
-        
-        
+
         if (RBAdministrator.isSelected()) {
             TAAnzeige.append("Administratormodus ist aktiviert.\n");
         } else {
@@ -504,7 +505,7 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 int max = -1;
                 t1 = TFAMin.getText();
                 t2 = TFAMax.getText();
-                
+
                 try {
                     min = Integer.parseInt(t1);
                     max = Integer.parseInt(t2);

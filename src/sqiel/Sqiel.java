@@ -31,16 +31,21 @@ public class Sqiel {
         //lege Tabelle BenutzerInfo an
         sqDB.erzeugeBenutzerInfo();
         //fuege alle Benutzer ein
-        sqDB.fuegeBenutzerEin("koeppen", "59747f5564a5470b3a191f67ca469301");
-        sqDB.fuegeBenutzerEin("koeppen2", "59747f5564a5470b3a191f67ca469301");
         /*
+        sqDB.fuegeBenutzerEin("koeppen", "59747f5564a5470b3a191f67ca469301");
+        //sqDB.fuegeBenutzerEin("koeppen2", "59747f5564a5470b3a191f67ca469301");
+        
         sqDB.fuegeBenutzerEin("louie", "b6ea4320f72d92669405dda0d07eefdd");
         sqDB.fuegeBenutzerEin("JoP", "ee7b630995e7a36b6420696989441e2d");
-        sqDB.fuegeBenutzerEin("Lion", "60d28e7d879c0dc48b9a593468cf11e5");
+        //sqDB.fuegeBenutzerEin("Lion", "60d28e7d879c0dc48b9a593468cf11e5");
         sqDB.fuegeBenutzerEin("Leon", "e48b7bf1a447021da85214b43f51fd4e");
-        sqDB.fuegeBenutzerEin("Timon", "a13fed3ea354889ea7675a4b84365497");
+        sqDB.fuegeBenutzerEin("Timon", "d41d8cd98f00b204e9800998ecf8427e");
         sqDB.fuegeBenutzerEin("Hannah", "cf82a9577f8e6fa17ce3ccf4daaf94e9");
          */
+        sqDB.fuegeBenutzerEin("test", "d41d8cd98f00b204e9800998ecf8427e");
+        sqDB.fuegeBenutzerEin("test2", "d41d8cd98f00b204e9800998ecf8427e");
+        sqDB.fuegeBenutzerEin("test3", "d41d8cd98f00b204e9800998ecf8427e");
+
         //lege MinMaxInfo-Tabelle an
         sqDB.erzeugeMinMaxInfo();
         //lege Tabelle TippInfo an
@@ -248,8 +253,7 @@ public class Sqiel {
                         System.out.println("geänderter min-Wert: " + min);
 
                     }
-                }
-                else{
+                } else {
                     System.out.println("Objekt zum Zählen ignoriert!");
                 }
                 System.out.println("Ermittelte verbleibende Spieler: " + verbleibendeSpieler);
@@ -262,14 +266,14 @@ public class Sqiel {
              */
             for (BidTippSammelobjekt obj : retVal) {
                 if (obj.punkte == -1) {
-                    System.out.println("Unbepunktetes Objekt gefunden: "+obj.bid);
+                    System.out.println("Unbepunktetes Objekt gefunden: " + obj.bid);
                     if (Math.abs(obj.Tipp - ctipp) == min) {
                         if (verbleibendeSpieler == 0) {
                             obj.punkte = 0;
                             System.out.println("Objektbepunktung: 0");
                         } else {
                             obj.punkte = verbleibendeSpieler - 1;
-                            System.out.println("Objektbepunktung: "+obj.punkte);
+                            System.out.println("Objektbepunktung: " + obj.punkte);
                         }
                     }
                 }
