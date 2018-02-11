@@ -425,12 +425,10 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 TFDeinTipp.setText("");
                 sq.gibAlleTabelleAus();
                 //Ladebalken-Fortschritt
-                int anzahlBenutzer = 0;
+                int anzahlBenutzer;
                 ResultSet rs = sq.sqDB.fuehreSelectAus("SELECT COUNT(*) FROM Benutzerinfo");
                 anzahlBenutzer =  ((Number) rs.getObject(1)).intValue();
-                int hundert;
-                hundert = 100;
-                int Prozentsatz = hundert/anzahlBenutzer;
+                int Prozentsatz = 100/anzahlBenutzer;
                 PBLadebalken.setValue(PBLadebalken.getValue()+ Prozentsatz);      
                 
 
