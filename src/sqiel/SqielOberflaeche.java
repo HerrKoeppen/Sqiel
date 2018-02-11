@@ -423,10 +423,24 @@ public class SqielOberflaeche extends javax.swing.JFrame {
                 TFBenutzername.setText("");
                 TFPasswort.setText("");
                 TFDeinTipp.setText("");
-                
                 sq.gibAlleTabelleAus();
+                //Ladebalken-Fortschritt
+                int anzahlBenutzer = 0;
+                ResultSet rs = sq.sqDB.fuehreSelectAus("SELECT COUNT(*) FROM Benutzerinfo");
+                anzahlBenutzer =  ((Number) rs.getObject(1)).intValue();
+                int hundert;
+                hundert = 100;
+                int Prozentsatz = hundert/anzahlBenutzer;
+                PBLadebalken.setValue(PBLadebalken.getValue()+ Prozentsatz);      
+                
+
+
+
+                
             } catch (NumberFormatException nfe) {
                 TAAnzeige.append("FEHLER: Benutzertipp ist keine Zahl.");
+            } catch (SQLException ex) {
+                Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             TAAnzeige.append("FEHLER: Anmeldeinfo falsch.\n");
@@ -548,6 +562,8 @@ public class SqielOberflaeche extends javax.swing.JFrame {
         if (RBAdministrator.isSelected()) {
             RBAdministrator.setSelected(false);
             TAAnzeige.append("Das Sqiel wird ausgewertet.\n");
+            //Ladebalken zurückgesetzt
+            PBLadebalken.setValue(0);
             if (TARundennummer.getText().equals("")) {
 
             } else {

@@ -37,14 +37,15 @@ public class Sqiel {
         
         sqDB.fuegeBenutzerEin("louie", "b6ea4320f72d92669405dda0d07eefdd");
         sqDB.fuegeBenutzerEin("JoP", "ee7b630995e7a36b6420696989441e2d");
-        //sqDB.fuegeBenutzerEin("Lion", "60d28e7d879c0dc48b9a593468cf11e5");
+        sqDB.fuegeBenutzerEin("Lion", "60d28e7d879c0dc48b9a593468cf11e5");
         sqDB.fuegeBenutzerEin("Leon", "e48b7bf1a447021da85214b43f51fd4e");
         sqDB.fuegeBenutzerEin("Timon", "d41d8cd98f00b204e9800998ecf8427e");
-        sqDB.fuegeBenutzerEin("Hannah", "cf82a9577f8e6fa17ce3ccf4daaf94e9");
-         */
+        sqDB.fuegeBenutzerEin("Hannah", "cf82a9577f8e6fa17ce3ccf4daaf94e9");*/
+        
         sqDB.fuegeBenutzerEin("test", "d41d8cd98f00b204e9800998ecf8427e");
         sqDB.fuegeBenutzerEin("test2", "d41d8cd98f00b204e9800998ecf8427e");
         sqDB.fuegeBenutzerEin("test3", "d41d8cd98f00b204e9800998ecf8427e");
+  
 
         //lege MinMaxInfo-Tabelle an
         sqDB.erzeugeMinMaxInfo();
