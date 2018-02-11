@@ -575,6 +575,47 @@ public class SqielOberflaeche extends javax.swing.JFrame {
     private void RBPunktestandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBPunktestandActionPerformed
         // TODO add your handling code here:
         TAAnzeige.append("Dein aktueller Punktestand wird angezeigt.\n");
+        ResultSet rs = sq.sqDB.fuehreSelectAus("SELECT COUNT(*) From Benutzerinfo");
+        //anzahl der Benutzer herausfinden
+        int anzahlBenutzer = 0;
+        try {
+            anzahlBenutzer = ((Number) rs.getObject(1)).intValue();
+        } catch (SQLException ex) {
+            Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int i;
+        for(i = anzahlBenutzer;i>0;i--){
+            int Tpkstd = 0;
+            int BenutzerString = 0;
+            String Benutzer = "";
+            ResultSet pk;
+            pk = sq.sqDB.fuehreSelectAus("SELECT SUM(pkstd) as Tpkstd FROM Tippinfo WHERE  bid ="+ i +"");
+            try {
+                Tpkstd = ((Number)pk.getObject(1)).intValue();
+            } catch (SQLException ex) {
+                Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet BenutzerRs;
+            BenutzerRs = sq.sqDB.fuehreSelectAus("SELECT benutzer FROM BenutzerInfo WHERE bid ="+ i +"");
+            try {
+                Benutzer = BenutzerRs.getString(1);
+            } catch (SQLException ex) {
+                Logger.getLogger(SqielOberflaeche.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            TAAnzeige.append(""+Benutzer+" = "+Tpkstd+"\n");
+
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_RBPunktestandActionPerformed
 
     /**
